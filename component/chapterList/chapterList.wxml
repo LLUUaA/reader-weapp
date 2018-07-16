@@ -1,0 +1,18 @@
+<block>
+  <view class="chapter-content">
+    <view class="tittle ft-middle color-black">章节目录</view>
+    <view class="pager ft-small flex">
+      <view class="btn" bindtap="ChapterList__switchPage" data-component-path="{{$path}}" data-component-class="ChapterList" data-e-switchPage-so="this" data-e-switchPage-a-a="prev">上一页</view>
+      <view class="btn select">
+        <picker mode="selector" range="{{chapterPager}}" bindchange="ChapterList__selectChapter" data-component-path="{{$path}}" data-component-class="ChapterList" data-e-selectChapter-so="this">
+          <view>{{pageIndex}}/{{chapterPager.length || '未知'}}</view>
+        </picker>
+      </view>
+      <view class="btn" bindtap="ChapterList__switchPage" data-component-path="{{$path}}" data-component-class="ChapterList" data-e-switchPage-so="this" data-e-switchPage-a-a="next">下一页</view>
+    </view>
+    <view class="chapter-item ft-small" bindtap="ChapterList__toReader" wx:key="{{item.chapterNum}}" wx:for="{{chapterList}}" wx:for-item="item" data-component-path="{{$path}}" data-component-class="ChapterList" data-e-toReader-so="this" data-e-toReader-a-a="{{item.chapterNum}}">
+      <view class="txt color-black">{{item.chapterName}}</view>
+      <view class="txt color-grey">更新：{{item.time || '未知'}}</view>
+    </view>
+  </view>
+</block>

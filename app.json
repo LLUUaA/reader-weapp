@@ -1,0 +1,30 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/tab/tab",
+    "pages/search/search",
+    "pages/bookDetail/bookDetail",
+    "pages/chapterDetails/chapterDetails",
+    "pages/reader/reader"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+
+    "tabBar": {
+      "list": [
+        {
+          "pagePath": "pages/index/index",
+          "text": "我的书架"
+        },
+        {
+          "pagePath": "pages/tab/tab",
+          "text": "书籍广场"
+        }
+      ]
+    }
+}

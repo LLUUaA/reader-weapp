@@ -1,0 +1,10 @@
+.search{
+    border: 1px solid #ccc;
+    /* background: #eee; */
+    width: 96%;
+    height: 70rpx;
+    line-height: 70rpx;
+    margin-left: 2%;
+    border-radius: 10rpx;
+    text-align: center;
+}

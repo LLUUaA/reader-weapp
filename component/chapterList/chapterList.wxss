@@ -1,0 +1,44 @@
+
+.chapter-content{
+    /* padding:20rpx;
+    min-height:100vh; */
+}
+
+.chapter-item{
+    background-color: #ffffff;
+}
+
+.chapter-item{
+    border-bottom: 1rpx solid #cccccc;
+    padding: 0 20rpx;
+    line-height:2;
+}
+
+.chapter-item .txt{
+    letter-spacing: 1.2;
+}
+
+.pager{
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    margin: 15rpx 0;
+}
+
+.chapter-content .tittle{
+    font-weight: bold;
+}
+
+.pager .btn{
+    width: 150rpx;
+    height: 60rpx;
+    line-height: 60rpx;
+    text-align: center;
+    border-radius: 10rpx;
+    border: 1rpx solid #888888;
+}
+
+.pager .select{
+    width: 200rpx;
+}

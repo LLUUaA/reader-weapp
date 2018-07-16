@@ -1,0 +1,29 @@
+// pages/tab/tab.js
+import { getHotBook } from '../../service/book.js';
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    hotBook:null
+  },
+
+  onLoad: function (options) {
+    this.getBook()
+  },
+
+  getBook(){
+    getHotBook()
+      .then(res => {
+        console.log(res);
+        this.setData({
+          hotBook: res.hotBook
+        })
+      })
+  },
+
+  onShareAppMessage: function () {
+  
+  }
+})

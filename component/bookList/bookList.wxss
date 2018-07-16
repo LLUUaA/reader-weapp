@@ -1,0 +1,38 @@
+@import '/app.wxss';
+
+.hot-book{
+    padding: 10rpx 20rpx;
+}
+
+.book-item{
+    width: 100%;
+    margin: 10rpx 0;
+    padding-bottom: 10rpx; 
+    border-bottom: 1rpx solid #eeeeee;
+}
+
+.book-item .book-cover{
+    width: 180rpx;
+    height: 240rpx;
+}
+
+.book-item .right{
+    width: 100%;
+   padding-left: 20rpx;
+}
+
+.book-item .book-name{
+    font-weight: bold;
+}
+
+.book-item .desc{
+    margin: 10rpx 0;
+    /* 单行显示 *//* white-space:nowrap; 
+    *//* 多行显示  */
+  text-align: start;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  overflow: hidden;
+  display: -webkit-box;
+}
