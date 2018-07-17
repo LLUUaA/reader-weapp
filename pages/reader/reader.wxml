@@ -1,10 +1,33 @@
-<view class="reader-content">
+<view class="reader-content" style="background-color:{{readerSetting.bgColor}};">
   <view>{{chapterName || ''}}</view>
-  <view class="reader ft-small color-black">
-    <view class="txt" wx:for="{{chapterContent}}" wx:for-item="item">{{item}}</view>
+  <view id='reader' class="ft-small color-black" style="line-height:{{readerSetting.lineHeight}};font-size:{{readerSetting.fontSize}}rpx;">
+    <view class="txt" wx:for="{{chapterContent}}" wx:key="{{index}}" wx:for-item="item">{{item}}</view>
   </view>
   <view class="switch-btn flex ft-small color-black">
     <view class="pre btn" data-switch-type="{{1}}" bindtap="switchChapter">上一章</view>
     <view class="next btn" data-switch-type="{{2}}" bindtap="switchChapter">下一章</view>
+  </view>
+
+  <view id='operate' catch:tap='handleShowSetting'>operate area</view>
+</view>
+
+<view class="setting {{showSetting?'open':'close'}} ft-middle color-grey" catch:tap='changeSetting'>
+  <view class='font-size color-black' >
+    <text class='color-grey title'>字号</text>
+    <view class='btn' data-cate='size' data-handle='reduce'>-</view>
+    <view class='size'>{{readerSetting.fontSize}}</view>
+    <view class='btn' data-cate='size' data-handle='add'>+</view>
+  </view>
+
+  <view class='font-size color-black'>
+    <text class='color-grey title'>行高</text>
+    <view class='btn' data-cate='line' data-handle='reduce'>-</view>
+    <view class='size'>{{readerSetting.lineHeight}}</view>
+    <view class='btn' data-cate='line' data-handle='add'>+</view>
+  </view>
+  
+  <view class='background'>
+    <text class='color-grey title'>背景</text>
+    <view  data-cate='bg' data-index="{{index}}" wx:for="{{backgroundList}}" style="background-color:{{item}}" class="bg-dot"></view>
   </view>
 </view>

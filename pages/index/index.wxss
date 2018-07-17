@@ -12,7 +12,7 @@
 .shujia {
   padding: 0 20rpx;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-between; 
 }
 
 .shujia .book,.add-book {
@@ -20,9 +20,18 @@
   text-align: center;
 }
 
+.shujia .book{
+  width: 200rpx;
+  word-break: break-all;
+}
+
 .shujia .book .cover,.add-book {
   width: 200rpx;
   height: 236rpx;
+}
+
+.add-book.hide{
+  opacity: 0;
 }
 
 .shujia .book .name {

@@ -1,15 +1,16 @@
 .reader-content{
-    background: #e1e1e1;
+    background-color: #e1e1e1;
     min-height: 100vh;
     padding: 20rpx; 
 }
 
-.reader {
+#reader {
     word-wrap: break-word;
     text-indent: 2em;
 }
-.reader .txt{
-    padding: 10rpx 0;
+
+#reader .txt{
+
 }
 
 .switch-btn{
@@ -20,18 +21,88 @@
     margin: 15rpx;
 }
 
-.switch-btn .pre{
-    
-}
-
-.switch-btn .next{
-    
-}
-
 .switch-btn .btn{
     width: 46%;
     height: 60rpx;
     line-height: 60rpx;
     border: 1rpx solid #cecece;
     text-align: center;
+}
+
+#operate {
+  width: 400rpx;
+  height: 350rpx;
+  line-height: 350rpx;
+  text-align: center;
+  border:  1px solid red;
+  position: fixed;
+  font-size: 32rpx;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  opacity: 0;
+}
+
+.setting{
+  position: fixed;
+  width: 100%;
+  height: 240rpx;
+  left: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  transition: all .2s ease-out;
+  padding: 20rpx;
+}
+
+.setting.open{
+  transform: translateY(0);
+}
+
+.setting.close{
+  transform: translateY(240rpx);
+}
+
+.setting .font-size{
+
+}
+
+.setting .background .bg-dot{
+  display: inline-block;
+  margin-left: 20rpx;
+  width: 55rpx;
+  height: 55rpx;
+  vertical-align: middle;
+  border-radius: 50%;
+}
+
+.setting .background .bg-dot.current{
+  border: 1px solid dodgerblue;
+}
+
+.setting .font-size .title{
+  vertical-align: top;
+  font-weight: normal;
+}
+
+.setting .font-size .size{
+  display: inline-block;
+  width: 38rpx;
+  text-align: center;
+  vertical-align: top;
+}
+
+.setting .font-size .btn{
+  display: inline-block;
+  width: 130rpx;
+  height: 55rpx;
+  line-height: 55rpx;
+  border-radius: 30rpx;
+  font-size: 40rpx;
+  margin: 0 20rpx;
+  text-align: center;
+  background-color: #eeeeee;
+}
+
+.setting .font-size{
+  margin: 15rpx 0;
 }

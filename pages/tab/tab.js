@@ -10,8 +10,14 @@ Page({
   },
 
   onLoad: function (options) {
-    this.getBook()
+    this.getBook();
   },
+
+  onShow:function(){
+    if(!getHotBook) {
+      this.getBook();
+    }
+  }, 
 
   getBook(){
     getHotBook()

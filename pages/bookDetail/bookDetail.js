@@ -6,7 +6,8 @@ Page({
 
   data: {
     bookId: null,
-    isAddBookShelf: false
+    isAddBookShelf: false,//是否加入书架
+    lastChapterNum: null,//上一次阅读章节
   },
   onLoad: function (options) {
     this.setData({
@@ -17,13 +18,13 @@ Page({
     this.checkAddBookShelf(options.bookId);
   },
 
-//检查是否加入书架
+  //检查是否加入书架
   checkAddBookShelf(bookId) {
-    const checkBack = checkBook(book.bookId);
+    const checkBack = checkBookShelf(bookId);
     this.setData({
-      isAddBookShelf: checkBack.isExist
+      isAddBookShelf: checkBack.isExist,
+      lastChapterNum: checkBack.readChapter || 1,
     })
-    return checkBack.readChapter
   },
 
   getBookDetail(bookId) {
@@ -37,12 +38,13 @@ Page({
 
   toReader(event) {
     wx.navigateTo({
-      url: `../reader/reader?bookId=${this.data.bookId}&chapterNum=${1}`
+      url: `../reader/reader?bookId=${this.data.bookId}&chapterNum=${this.data.lastChapterNum}`
     })
   },
 
   addBookshelf() {
-    let bookInfo = this.data.bookInfo;
+    const isAddBookShelf = this.data.isAddBookShelf;
+    const bookInfo = this.data.bookInfo;
     let bookShelf = {};//缓存的数据
 
     bookShelf.bookName = bookInfo.bookName;
@@ -50,10 +52,12 @@ Page({
 
     bookShelf.bookId = this.data.bookId;
     bookShelf.readChapter = 1;
-    addBookShelf(bookShelf);
-    this.setData({
-      isAddBookShelf: true
-    })
+    addBookShelf(bookShelf, !isAddBookShelf, () => {
+      this.setData({
+        isAddBookShelf: !isAddBookShelf
+      })
+    });
+
   },
 
   toChapterDetails() {
