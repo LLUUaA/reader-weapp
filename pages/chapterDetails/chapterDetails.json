@@ -1,1 +1,6 @@
-{}
+{
+  "navigationBarTitleText": "章节详情",
+  "usingComponents": {
+    "chapterList": "/component/chapterList/chapterList"
+  }
+}

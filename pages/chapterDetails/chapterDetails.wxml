@@ -1,2 +1,3 @@
-<!--pages/chapterDetails/chapterDetails.wxml-->
-<text>pages/chapterDetails/chapterDetails.wxml</text>
+<view class="details-content">
+  <chapterList bookId="{{bookId}}" moreChapter="{{!0}}" />
+</view>

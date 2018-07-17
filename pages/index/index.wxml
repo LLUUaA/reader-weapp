@@ -1,1 +1,11 @@
-<view class='search ft-middle'>点击搜索</view>
+<view class="index-page">
+  <view class="search color-black ft-middle" data-path='search' bindtap="toRoute">搜索你想要的</view>
+
+  <view class='shujia ft-small color-black flex' bind:tap='toReader'>
+    <view wx:for="{{bookShelfList}}" class='book' data-index="{{index}}">
+      <image class='cover' data-index="{{index}}" mode='aspectFill' src="{{item.coverImg||'/assets/lol.jpg'}}"></image>
+      <view class='name'>{{item.bookName||'未知书名'}}</view>
+    </view>
+    <view class='add-book' data-path='tab' catch:tap='toRoute' ></view>
+  </view>
+</view>

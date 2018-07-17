@@ -16,7 +16,6 @@ Page({
   getBook(){
     getHotBook()
       .then(res => {
-        console.log(res);
         this.setData({
           hotBook: res.hotBook
         })

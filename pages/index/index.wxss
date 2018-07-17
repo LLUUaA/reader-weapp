@@ -1,10 +1,54 @@
-.search{
-    border: 1px solid #ccc;
-    /* background: #eee; */
-    width: 96%;
-    height: 70rpx;
-    line-height: 70rpx;
-    margin-left: 2%;
-    border-radius: 10rpx;
-    text-align: center;
+.search {
+  border: 1rpx solid #ccc;
+  /* background: #eee; */
+  width: 96%;
+  height: 70rpx;
+  line-height: 70rpx;
+  margin-left: 2%;
+  border-radius: 10rpx;
+  text-align: center;
 }
+
+.shujia {
+  padding: 0 20rpx;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.shujia .book,.add-book {
+  margin: 15rpx 0;
+  text-align: center;
+}
+
+.shujia .book .cover,.add-book {
+  width: 200rpx;
+  height: 236rpx;
+}
+
+.shujia .book .name {
+
+}
+
+.add-book {
+  position: relative;
+  border: 1px solid #dddddd;
+}
+
+.add-book::after{
+  width: 80rpx;
+  height: 1px;
+  background-color: #999999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+
+.add-book::before{
+  width: 1px;
+  height: 80rpx;
+  background-color: #999999; 
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+

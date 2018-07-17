@@ -1,2 +1,10 @@
-<!--pages/reader/reader.wxml-->
-<text>pages/reader/reader.wxml</text>
+<view class="reader-content">
+  <view>{{chapterName || ''}}</view>
+  <view class="reader ft-small color-black">
+    <view class="txt" wx:for="{{chapterContent}}" wx:for-item="item">{{item}}</view>
+  </view>
+  <view class="switch-btn flex ft-small color-black">
+    <view class="pre btn" data-switch-type="{{1}}" bindtap="switchChapter">上一章</view>
+    <view class="next btn" data-switch-type="{{2}}" bindtap="switchChapter">下一章</view>
+  </view>
+</view>

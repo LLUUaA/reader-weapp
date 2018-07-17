@@ -45,6 +45,12 @@
   color: #fff;
 }
 
+.hand-btn .btn.is-add{
+  background-color: #dddddd;
+  color: #999999;
+  border-color: #999999; 
+}
+
 .hand-btn .btn {
   width: 48%;
   height: 65rpx;

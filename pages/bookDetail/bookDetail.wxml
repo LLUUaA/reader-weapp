@@ -4,23 +4,23 @@
   <view class="content bg-grey">
     <view class="book-info flex">
       <view class="cover">
-        <image mode="aspectFill" class="img" src="{{lolImg}}" />
+        <image mode="aspectFill" class="img" src="{{bookInfo.coverImg}}" />
       </view>
       <view class="info ft-small color-black2">
-        <view class="name color-black">书名</view>
-        <view>作者：xx</view>
-        <view>章数：xx</view>
-        <view>进度: xx</view>
-        <view>更新: xx</view>
+        <view class="name color-black">书名 {{bookInfo.bookName||'--'}}</view>
+        <view>作者：{{bookInfo.bookAuthor||'--'}}</view>
+        <view>{{bookInfo.chapter||'作品类别'}}</view>
+        <view>进度: {{bookInfo.status||'--'}}</view>
+        <!-- <view>更新: xx</view> -->
       </view>
     </view>
     <view class="hand-btn ft-small flex">
       <view class="btn" bindtap="toReader">开始阅读</view>
       <view class="btn" bindtap="toChapterDetails">章节目录</view>
-      <view class="btn">加入书架</view>
+      <view class="btn {{isAddBookShelf?'is-add':''}}" bindtap='addBookshelf'>{{isAddBookShelf?'取消书架':'加入书架'}}</view>
       <view class="g-btn-warming">TXT下载</view>
     </view>
-    <chapterList bookId="{{bookId}}" chapterType="1" />
+    <chapterList bookId="{{bookId}}" />
     <view class="nomore" bindtap="toChapterDetails">点击查看更多章节</view>
   </view>
 </block>

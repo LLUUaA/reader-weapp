@@ -1,66 +1,64 @@
 // pages/reader/reader.js
+
+import { readBook } from '../../service/book.js';
+import { updateChapter } from '../../utils/book.js';
+
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-  
+
+  },
+
+  onLoad: function(options) {
+    const { bookId, chapterNum } =  options;
+
+    if(!bookId) return;
+    this.setData({
+      bookId
+    })
+    this.getReader(bookId,chapterNum);
+  },
+
+
+  /**
+   * @function getReader 获取内容
+   * @param {Number} bookId 
+   * @param {Number} chapterNum
+   */
+  getReader(bookId, chapterNum=1) {
+    readBook(bookId, chapterNum)
+      .then(res => {
+        wx.setNavigationBarTitle({
+          title: res.chapterName || 'reader'
+        })
+        this.setData({
+          chapterNum,
+          chapterName: res.chapterName,
+          chapterContent: res.chapterContent || []
+        }, () => {
+          updateChapter(bookId, chapterNum);
+          wx.pageScrollTo({
+            scrollTop: 0,
+            duration: 0
+          })
+        })
+      })
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * @function switchChapter 切换章节
+   * @param {Number} next 默认下一页
    */
-  onLoad: function (options) {
-  
+  switchChapter(event) {
+    const bookId = this.data.bookId;
+    const next = event.target.dataset.switchType;
+    let chapterNum = this.data.chapterNum;
+    chapterNum = next === 2 ? ++chapterNum : --chapterNum;
+    this.getReader(bookId, chapterNum);
+    updateChapter(bookId,chapterNum);
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
+  onShareAppMessage: function() {
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
   }
 })
