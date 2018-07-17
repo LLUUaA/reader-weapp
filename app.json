@@ -19,11 +19,11 @@
       "list": [
         {
           "pagePath": "pages/index/index",
-          "text": "我的书架"
+          "text": "书架"
         },
         {
           "pagePath": "pages/tab/tab",
-          "text": "书籍广场"
+          "text": "推荐"
         }
       ]
     }

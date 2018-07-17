@@ -9,7 +9,11 @@ export default (options) => {
       data: {},
       method: 'GET',
       success: (res)=>{
-        resolve(res.data)
+        if(res.data.code=== "-1"){
+          reject(res.data);
+        }else{
+          resolve(res.data)
+        }
       },
       fail: reject,
       header: {

@@ -58,9 +58,12 @@ export function getHotBook() {
   });
 }
 
-export function getBook(bookId) {
+export function getBook(bookId,onlyBookInfo=true) {
   return request({
-    api: `book/chapter/${bookId}`
+    api: `book/chapter/${bookId}`,
+    data:{
+      onlyBookInfo
+    }
   });
 }
 

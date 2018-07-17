@@ -6,7 +6,7 @@ Component({
   properties: {
     bookList: {
     type: Array,
-    value: []
+    value: null
   },
   },
 

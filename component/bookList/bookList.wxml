@@ -3,9 +3,9 @@
     <view wx:key="{{item.bookId}}" class="book-item flex" wx:for="{{bookList}}" wx:for-item="item">
       <image class="book-cover" lazy-load="true" mode="widthFix" src="{{item.coverImg}}" data-book-id="{{item.bookId}}" />
       <view class="right" data-book-id="{{item.bookId}}">
-        <view class="book-name ft-small">{{item.name}}</view>
-        <view class="desc ft-xsmall color-grey">{{item.description}}</view>
-        <view class="author ft-xsmall">{{item.author}}</view>
+        <view class="book-name ft-small" data-book-id="{{item.bookId}}" >{{item.name}}</view>
+        <view class="desc ft-xsmall color-grey" data-book-id="{{item.bookId}}">{{item.description}}</view>
+        <view class="author ft-xsmall" data-book-id="{{item.bookId}}">{{item.author}}</view>
       </view>
     </view>
     <block wx:if="{{!hasValue}}">

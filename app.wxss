@@ -3,6 +3,11 @@ view,input{
             box-sizing: border-box;
 }
 
+view::after,view::before{
+  content: '';
+  position: absolute;
+}
+
 button{
     border-radius: 10rpx;
 }
