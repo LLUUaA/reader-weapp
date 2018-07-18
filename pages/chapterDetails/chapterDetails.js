@@ -11,9 +11,5 @@ Page({
     this.setData({
       bookId
     })
-  },
-
-  onShareAppMessage: function () {
-  
   }
 })

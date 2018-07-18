@@ -29,6 +29,9 @@ Page({
   },
 
   onShareAppMessage: function () {
-  
+    return {
+      title: '给你想看的',
+      path: 'pages/tab/tab'
+    }
   }
 })

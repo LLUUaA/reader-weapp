@@ -71,6 +71,9 @@ Page({
   },
 
   onShareAppMessage: function() {
-
+    return {
+      title: '搜索你想看的',
+      path: 'pages/search/search'
+    }
   }
 })

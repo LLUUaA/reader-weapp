@@ -67,6 +67,9 @@ Page({
   },
 
   onShareAppMessage: function () {
-
+    return {
+      title: '搜索你想看的',
+      path: 'pages/bookDetail/bookDetail?bookId=' + this.data.bookId
+    }
   }
 })

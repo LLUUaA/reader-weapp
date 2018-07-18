@@ -78,4 +78,11 @@ Page({
     }
   },
 
+  onShareAppMessage: function () {
+    return {
+      title: '青莲一叶',
+      path: 'pages/index/index'
+    }
+  }
+
 })
