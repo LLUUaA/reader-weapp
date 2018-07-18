@@ -47,6 +47,11 @@ Component({
             chapterList: res.chapterList,
             chapterPager: res.chapterPager,
             pageIndex: res.pageIndex
+          },()=>{
+            wx.pageScrollTo({
+              scrollTop: 0,
+              duration: 0
+            })
           })
         })
     },

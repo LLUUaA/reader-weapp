@@ -1,7 +1,19 @@
+<template name="handle">
+  <view wx:if="{{moreChapter&&chapterPager}}" class="pager ft-small flex">
+    <view class="btn" data-page='prev' bindtap="switchPage">上一页</view>
+    <view class="btn select">
+      <picker mode="selector" range="{{chapterPager}}" bindchange="selectChapter">
+        <view>{{pageIndex}}/{{chapterPager.length || '未知'}}</view>
+      </picker>
+    </view>
+    <view class="btn" data-page='next' bindtap="switchPage">下一页</view>
+  </view>
+</template>
+
 <block>
   <view class="chapter-content">
     <view class="tittle ft-middle color-black">章节目录</view>
-    <view wx:if="{{moreChapter}}" class="pager ft-small flex">
+    <!-- <view wx:if="{{moreChapter}}" class="pager ft-small flex">
       <view class="btn" data-page='prev' bindtap="switchPage">上一页</view>
       <view class="btn select">
         <picker mode="selector" range="{{chapterPager}}" bindchange="selectChapter">
@@ -9,12 +21,17 @@
         </picker>
       </view>
       <view class="btn" data-page='next' bindtap="switchPage">下一页</view>
-    </view>
+    </view> -->
+
+    <template is="handle" data="{{moreChapter,chapterPager,pageIndex}}" />
+
     <view id='chapter-item' bindtap="toReader">
       <view class="chapter-item ft-small" data-chapter-num="{{item.chapterNum}}" wx:key="{{item.chapterNum}}" wx:for="{{chapterList}}" wx:for-item="item">
         <view class="txt color-black" data-chapter-num="{{item.chapterNum}}">{{item.chapterName}}</view>
         <view class="txt color-grey" data-chapter-num="{{item.chapterNum}}">更新：{{item.time || '未知'}}</view>
       </view>
     </view>
+
+    <template is="handle" data="{{moreChapter,chapterPager,pageIndex}}" />
   </view>
 </block>
