@@ -2,11 +2,12 @@
 Page({
 
   data: {
-    bookId:null
+    bookId:null,
+    fromReader:null
   },
 
   onLoad: function (options) {
-    const { bookId } = options;
+    const { bookId  } = options;
     this.setData({
       bookId
     })

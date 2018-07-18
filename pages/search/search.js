@@ -1,12 +1,17 @@
 // pages/search/search.js
-import { searchBook } from '../../service/book.js';
+import {
+  searchBook
+} from '../../service/book.js';
 let lock = false;
 Page({
 
   data: {
-
+    searchValue: null,
+    bookList: null,
+    isLastPage: null,
+    pageIndex: null
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
 
   },
 
@@ -17,9 +22,9 @@ Page({
     })
   },
 
-  submit() {
+  submit(page = false) {
     const searchValue = this.data.searchValue || '';
-    if (lock) return;
+    if (lock || this.data.isLastPage) return;
     if (!searchValue) {
       wx.showToast({
         title: '请输入搜索内容',
@@ -35,12 +40,21 @@ Page({
     lock = true;
     searchBook({
       keyword: searchValue,
-      pageIndex: 1
+      pageIndex: page ? this.data.pageIndex + 1 : 1
     }).then(res => {
       wx.hideLoading();
       lock = false;
+      let bookList = this.data.bookList||[];
+      if(page){
+        bookList = bookList.concat(res.result);
+      }else{
+        bookList = res.result;
+      }
+
       this.setData({
-        bookList: res.result
+        bookList,
+        pageIndex: res.pager.pageIndex,
+        isLastPage: !res.result || !res.result.length
       })
     }, () => {
       wx.hideLoading();
@@ -52,7 +66,11 @@ Page({
     })
   },
 
-  onShareAppMessage: function () {
+  onReachBottom: function() {
+    this.submit(true); //分页
+  },
+
+  onShareAppMessage: function() {
 
   }
 })

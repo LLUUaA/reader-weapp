@@ -8,10 +8,10 @@ export default (options) => {
       api: '',
       data: {},
       method: 'GET',
-      success: (res)=>{
-        if(res.data.code=== "-1"){
+      success: (res) => {
+        if (res.data.code === -1) {
           reject(res.data);
-        }else{
+        } else {
           resolve(res.data)
         }
       },
@@ -22,14 +22,5 @@ export default (options) => {
 
     options.url = options.url + options.api
     wx.request(options)
-
-    // .then(res => {
-    //     if(res.statusCode===200){
-    //         // ...do something
-    //     }
-    //     resolve(res.data);
-    // }, err => {
-    //     reject(err);
-    // })
   })
 }

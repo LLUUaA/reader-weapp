@@ -1,5 +1,5 @@
-<view class="reader-content" style="background-color:{{readerSetting.bgColor}};">
-  <view>{{chapterName || ''}}</view>
+<view class="reader-content" style="background-color:{{readerSetting.bgColor}};" catchtap='closeSetting' bindtouchstart='moveEvent' bindtouchmove='closeSetting' bindtouchend='moveEvent' bindtouchcancel='moveEvent'>
+  <view class='book-name'>{{chapterName || ''}}</view>
   <view id='reader' class="ft-small color-black" style="line-height:{{readerSetting.lineHeight}};font-size:{{readerSetting.fontSize}}rpx;">
     <view class="txt" wx:for="{{chapterContent}}" wx:key="{{index}}" wx:for-item="item">{{item}}</view>
   </view>
@@ -12,22 +12,32 @@
 </view>
 
 <view class="setting {{showSetting?'open':'close'}} ft-middle color-grey" catch:tap='changeSetting'>
-  <view class='font-size color-black' >
-    <text class='color-grey title'>字号</text>
+  <view class='flex font-size color-black'>
+    <view class='color-grey title'>
+      <image src='/assets/ico_font_size.svg'></image>
+      <text>字号</text>
+    </view>
     <view class='btn' data-cate='size' data-handle='reduce'>-</view>
-    <view class='size'>{{readerSetting.fontSize}}</view>
+    <view class='size color-grey'>{{readerSetting.fontSize/2}}</view>
     <view class='btn' data-cate='size' data-handle='add'>+</view>
   </view>
 
-  <view class='font-size color-black'>
-    <text class='color-grey title'>行高</text>
+  <view class='flex font-size color-black'>
+    <view class='color-grey title'>
+      <image src='/assets/ico_line_height.svg'></image>
+      <text>行高</text>
+    </view>
     <view class='btn' data-cate='line' data-handle='reduce'>-</view>
-    <view class='size'>{{readerSetting.lineHeight}}</view>
+    <view class='size color-grey'>{{readerSetting.lineHeight}}</view>
     <view class='btn' data-cate='line' data-handle='add'>+</view>
   </view>
-  
+
   <view class='background'>
     <text class='color-grey title'>背景</text>
-    <view  data-cate='bg' data-index="{{index}}" wx:for="{{backgroundList}}" style="background-color:{{item}}" class="bg-dot"></view>
+    <view data-cate='bg' data-index="{{index}}" wx:for="{{backgroundList}}" wx:key="{{item}}" style="background-color:{{item}}" class="bg-dot"></view>
+  </view>
+  <view catchtap='toChapterDetails' class='chapter flex color-grey'>
+    <image src='/assets/ico_chapter.svg'></image>
+    <text>目录</text>
   </view>
 </view>

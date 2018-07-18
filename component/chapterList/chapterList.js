@@ -1,5 +1,7 @@
 // component/chapterList/chapterList.js
 import { getChapterList } from '../../service/book.js'
+import { Route } from '../../utils/Route.js';
+const app = getApp();
 
 Component({
   /**
@@ -57,9 +59,18 @@ Component({
     toReader(event) {
       console.log(event);
       const { chapterNum } = event.target.dataset;
+      // wx.navigateTo({
+      //   url: `/pages/reader/reader?bookId=${this.data.bookId}&chapterNum=${chapterNum || 1}`,
+      // })
 
-      wx.navigateTo({
-        url: `/pages/reader/reader?bookId=${this.data.bookId}&chapterNum=${chapterNum || 1}`,
+      app.chapterInfo = {
+        bookId: this.data.bookId,
+        chapterNum: chapterNum||1
+      }
+
+      Route({
+        pageSign: 'isReaderPage',
+        toUrl: `../reader/reader`
       })
     },
 

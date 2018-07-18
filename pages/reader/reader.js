@@ -13,7 +13,8 @@ const lineHeightInterval = {
   min: 1.5
 };//行高区间 step->0.1
 
-const backgroundList = ['#333333', '#e1e1e1'];
+const backgroundList = ['#EAEAEF', '#FDE6E0', '#FAF9DE', '#DCE2F1', '#E3EDCD', '#DCE2F1', '#E9EBFE'];
+const app = getApp();
 
 Page({
 
@@ -27,19 +28,90 @@ Page({
     showSetting: null
   },
 
+  isReaderPage:true,
+
   onLoad: function (options) {
     const { bookId, chapterNum } = options;
 
     if (!bookId) return;
+
     this.setData({
       bookId
     })
-    this.getReader(bookId, chapterNum || 1);
+    this.getReader(bookId, chapterNum);
+    delete app.chapterInfo;
+
     this.getReaderSetting();
+  },
+
+  onShow() {
+    if (app.chapterInfo) {
+      const { bookId, chapterNum } = app.chapterInfo;
+
+      if (!bookId) return;
+      this.setData({
+        bookId
+      })
+      this.getReader(bookId, chapterNum);
+      this.getReaderSetting();
+      delete app.chapterInfo;
+    }
+
+  },
+
+
+  touchstart:null,
+  // move事件处理
+  moveEvent(event) {
+    const getDirection = (touchEnd) => {
+      const touchStart = this.touchstart;
+      const offsetX = 40,
+        offsetY = 30;
+      const moveX = touchEnd.clientX - touchStart.clientX,
+        moveY = Math.abs(touchEnd.clientY - touchStart.clientY);
+        
+      if (moveX > offsetX && moveY < offsetY) {
+        //向右划
+        return 'left'
+      }
+
+      if (moveX < -offsetX && moveY < offsetY) {
+        //向左划
+        return 'right'
+      }
+
+      return 0;
+    }
+
+    switch (event.type) {
+      case "touchstart":
+        this.touchstart = event.touches[0];
+        break;
+      case "touchmove":
+        break;
+      case "touchend":
+        const bookId = this.data.bookId;
+        let chapterNum = this.data.chapterNum;
+        switch (getDirection(event.changedTouches[0])) {
+          case 'left':
+            this.getReader(bookId, --chapterNum);
+            break;
+          case 'right':
+            this.getReader(bookId, ++chapterNum);
+            break;
+          default:
+            return;
+        }
+        break;
+    }
   },
 
   getReaderSetting() {
     const setting = wx.getStorageSync(READER_SETTING_KEY) || this.defaultSetting;
+    wx.setNavigationBarColor({
+      frontColor: '#000000',
+      backgroundColor: setting.bgColor,
+    })
     this.setData({
       readerSetting: setting
     })
@@ -54,7 +126,7 @@ Page({
           case 'add':
             if (readerSetting.fontSize >= fontSizeInterval.max) {
               wx.showToast({
-                title: `最大字号为${fontSizeInterval.max}哦 (＞﹏＜)`,
+                title: `最大字号为${fontSizeInterval.max/2}哦 (＞﹏＜)`,
                 icon: 'none'
               })
               return;
@@ -64,7 +136,7 @@ Page({
           case 'reduce':
             if (readerSetting.fontSize <= fontSizeInterval.min) {
               wx.showToast({
-                title: `最小字号为${fontSizeInterval.min}哦 (＞﹏＜)`,
+                title: `最小字号为${fontSizeInterval.min/2}哦 (＞﹏＜)`,
                 icon: 'none'
               })
               return;
@@ -104,6 +176,10 @@ Page({
         break;
       case 'bg':
         readerSetting.bgColor = backgroundList[index];
+        wx.setNavigationBarColor({
+          frontColor: '#000000',
+          backgroundColor: readerSetting.bgColor,
+        })
         break;
       default:
       return;
@@ -125,6 +201,14 @@ Page({
       showSetting: !showSetting
     })
   },
+
+  closeSetting(){
+    this.setData({
+      showSetting: false
+    })
+  },
+
+
 
   /**
    * @function getReader 获取内容
@@ -161,13 +245,19 @@ Page({
     let chapterNum = this.data.chapterNum;
     chapterNum = next === 2 ? ++chapterNum : --chapterNum;
     this.getReader(bookId, chapterNum);
-    updateChapter(bookId, chapterNum);
+  },
 
+  toChapterDetails() {
+    wx.navigateTo({
+      url: `../chapterDetails/chapterDetails?bookId=${this.data.bookId}`
+    })
+
+    this.closeSetting();
   },
 
   defaultSetting: {
     fontSize: 28,
-    bgColor: '#e1e1e1',
+    bgColor: '#EAEAEF',
     lineHeight: 2
   },
 

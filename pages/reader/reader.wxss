@@ -4,6 +4,11 @@
     padding: 20rpx; 
 }
 
+.book-name{
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
 #reader {
     word-wrap: break-word;
     text-indent: 2em;
@@ -49,9 +54,10 @@
   height: 240rpx;
   left: 0;
   bottom: 0;
-  background-color: #ffffff;
+  background-color: rgba(0, 0, 0, .85);
   transition: all .2s ease-out;
   padding: 20rpx;
+
 }
 
 .setting.open{
@@ -63,7 +69,8 @@
 }
 
 .setting .font-size{
-
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .setting .background .bg-dot{
@@ -80,8 +87,16 @@
 }
 
 .setting .font-size .title{
+  display: inline-block;
   vertical-align: top;
   font-weight: normal;
+}
+
+.setting .font-size .title image{
+  width: 32rpx;
+  height: 32rpx;
+  vertical-align: middle;
+  margin-left: 10rpx;
 }
 
 .setting .font-size .size{
@@ -89,6 +104,20 @@
   width: 38rpx;
   text-align: center;
   vertical-align: top;
+}
+
+.setting .chapter{
+  font-size: 34rpx;
+  position: absolute;
+  top: 30rpx;
+  right: 30rpx;
+  align-items: center;
+}
+
+.setting .chapter image{
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 10rpx;
 }
 
 .setting .font-size .btn{
