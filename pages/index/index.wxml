@@ -1,7 +1,7 @@
 <view class="index-page">
   <view class="search color-black ft-middle" data-path='search' bindtap="toRoute">搜索你想要的</view>
 
-  <view class='shujia ft-small color-black flex' bind:tap='toReader'>
+  <view class='shujia ft-small color-black flex' bind:tap='toReader' bindlongpress='longTapBook'>
     <view wx:for="{{bookShelfList}}" wx:key="{{item.bookId}}" class='book' data-index="{{index}}">
       <image class='cover' data-index="{{index}}" mode='aspectFill' src="{{item.coverImg||'/assets/lol.jpg'}}"></image>
       <view class='name'>{{item.bookName||'未知书名'}}</view>

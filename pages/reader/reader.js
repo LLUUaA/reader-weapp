@@ -39,8 +39,6 @@ Page({
       bookId
     })
     this.getReader(bookId, chapterNum);
-    delete app.chapterInfo;
-
     this.getReaderSetting();
   },
 
@@ -218,6 +216,7 @@ Page({
   getReader(bookId, chapterNum = 1) {
     readBook(bookId, chapterNum)
       .then(res => {
+        if (!res || !res.chapterContent.length) return;
         wx.setNavigationBarTitle({
           title: res.chapterName || 'reader'
         })

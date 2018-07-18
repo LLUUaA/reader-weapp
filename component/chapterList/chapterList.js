@@ -57,7 +57,6 @@ Component({
     },
 
     toReader(event) {
-      console.log(event);
       const { chapterNum } = event.target.dataset;
       // wx.navigateTo({
       //   url: `/pages/reader/reader?bookId=${this.data.bookId}&chapterNum=${chapterNum || 1}`,

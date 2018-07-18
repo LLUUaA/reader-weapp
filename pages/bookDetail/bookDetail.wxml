@@ -17,7 +17,7 @@
     <view class="hand-btn ft-small flex">
       <view class="btn" bindtap="toReader">开始阅读</view>
       <view class="btn" bindtap="toChapterDetails">章节目录</view>
-      <view class="btn {{isAddBookShelf?'is-add':''}}" bindtap='addBookshelf'>{{isAddBookShelf?'取消书架':'加入书架'}}</view>
+      <view class="btn {{isAddBookShelf?'is-add':''}}" bindtap='addBookshelf'>{{isAddBookShelf?'移出书架':'加入书架'}}</view>
       <view class="g-btn-warming">TXT下载</view>
     </view>
     <chapterList bookId="{{bookId}}" />
