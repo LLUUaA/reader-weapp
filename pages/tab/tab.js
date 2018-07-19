@@ -10,11 +10,11 @@ Page({
   },
 
   onLoad: function (options) {
-    this.getBook();
+    // this.getBook();
   },
 
   onShow:function(){
-    if(!getHotBook) {
+    if (!this.data.hotBook) {
       this.getBook();
     }
   }, 
