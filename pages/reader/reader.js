@@ -64,7 +64,7 @@ Page({
     const getDirection = (touchEnd) => {
       const touchStart = this.touchstart;
       const offsetX = 40,
-        offsetY = 30;
+        offsetY = 50;
       const moveX = touchEnd.clientX - touchStart.clientX,
         moveY = Math.abs(touchEnd.clientY - touchStart.clientY);
         

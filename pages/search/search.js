@@ -16,10 +16,13 @@ Page({
   },
 
   inputTxt(event) {
-    let value = event.detail.value || event.target.value;
+    let value = event.detail.value;
     this.setData({
       searchValue: value
     })
+  },
+  clickSubmit(){
+    this.submit();
   },
 
   submit(page = false) {
@@ -36,14 +39,16 @@ Page({
     wx.showLoading({
       title: '搜索中..',
     })
-
     lock = true;
     searchBook({
       keyword: searchValue,
       pageIndex: page ? this.data.pageIndex + 1 : 1
     }).then(res => {
+;
       wx.hideLoading();
       lock = false;
+      if (!res || !res.result.length) return
+
       let bookList = this.data.bookList||[];
       if(page){
         bookList = bookList.concat(res.result);
