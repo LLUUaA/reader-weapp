@@ -112,11 +112,14 @@ Page({
   getBook(){
     getHotBook()
       .then(res => {
+        wx.stopPullDownRefresh();
         this.setData({
           hotBook: res.hotBook,
           maleMenu: res.maleMenu,
           femaleMenu: res.femaleMenu
         })
+      },err=>{
+        wx.stopPullDownRefresh();
       })
   },
 

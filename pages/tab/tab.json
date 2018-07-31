@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "书籍广场",
+  "backgroundTextStyle": "dark",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "bookList": "/component/bookList/bookList",

@@ -7,12 +7,12 @@
 
   <view class='line c1' catchtap='choose' data-cate='male'>
     男频:
-    <text wx:for="{{maleMenu}}" data-index="{{index}}" class="{{item.current?'current':''}}"> {{item.subTxt}} </text>
+    <text wx:for="{{maleMenu}}" wx:key="{{item.href}}" data-index="{{index}}" class="{{item.current?'current':''}}"> {{item.subTxt}} </text>
   </view>
 
   <view class='line c1' catchtap='choose' data-cate='female'>
     女频:
-    <text wx:for="{{femaleMenu}}" data-index="{{index}}" class="{{item.current?'current':''}}"> {{item.subTxt}} </text>
+    <text wx:for="{{femaleMenu}}" wx:key="{{item.href}}" data-index="{{index}}" class="{{item.current?'current':''}}"> {{item.subTxt}} </text>
   </view>
 
 </view>
