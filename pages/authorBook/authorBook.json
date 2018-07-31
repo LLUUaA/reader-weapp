@@ -1,5 +1,4 @@
 {
-  "navigationBarTitleText": "搜索",
   "usingComponents": {
     "bookList": "/component/bookList/bookList",
     "backTop": "/component/backTop/backTop"

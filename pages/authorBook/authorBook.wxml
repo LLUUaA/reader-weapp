@@ -1,0 +1,4 @@
+<!--pages/authorBook/authorBook.wxml-->
+<bookList bookList="{{authorBook}}" />
+
+<backTop pageScroll="{{pageScroll}}" />

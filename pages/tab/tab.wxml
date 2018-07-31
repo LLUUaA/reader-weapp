@@ -1,2 +1,22 @@
 <!--pages/tab/tab.wxml-->
-<bookList  bookList="{{hotBook}}" />
+<view class='ft-middle color-black cate'>
+  <view class='title flex line'>
+    <view>分类</view>
+    <view class='ft-small'>{{totalBook|| '' }}</view>
+  </view>
+
+  <view class='line c1' catchtap='choose' data-cate='male'>
+    男频:
+    <text wx:for="{{maleMenu}}" data-index="{{index}}" class="{{item.current?'current':''}}"> {{item.subTxt}} </text>
+  </view>
+
+  <view class='line c1' catchtap='choose' data-cate='female'>
+    女频:
+    <text wx:for="{{femaleMenu}}" data-index="{{index}}" class="{{item.current?'current':''}}"> {{item.subTxt}} </text>
+  </view>
+
+</view>
+
+<bookList bookList="{{hotBook}}" />
+
+<backTop pageScroll="{{pageScroll}}" />

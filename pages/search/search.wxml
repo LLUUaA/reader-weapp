@@ -6,3 +6,5 @@
   <bookList bookList="{{bookList}}" />
   <view wx:if="{{isLastPage}}" class="nomore">往下没有更多数据</view>
 </view>
+
+<backTop pageScroll="{{pageScroll}}" />

@@ -1,1 +1,31 @@
 /* pages/tab/tab.wxss */
+
+.cate {
+  padding: 20rpx;
+  /* background-color: #eeeeee; *//* border: 1px solid #eeeeee; *//* border-bottom: 1px solid #eeeeee; */
+  box-shadow: 0 2rpx 10rpx #cecece;
+}
+
+.c1 {
+  padding: 15rpx 0;
+}
+
+.line {
+  border-bottom: 1px #eee solid;
+}
+
+.cate .title {
+  padding: 15rpx 0;
+  justify-content: space-between;
+}
+
+.current {
+  background-color: #fbbc05;
+  color: #fff;
+}
+
+.cate text {
+  display: inline-block;
+  padding: 5rpx 10rpx;
+  text-align: center;
+}

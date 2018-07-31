@@ -48,4 +48,9 @@ module.exports={
       }
   },
 
+  getN(n,num){
+    const arr = String(num).split('');
+    return arr[n]
+  }
+
 }

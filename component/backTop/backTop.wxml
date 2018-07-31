@@ -1,0 +1,5 @@
+<!--component/backTop/backTop.wxml-->
+<view hidden="{{!show}}" class='back-top' catch:tap='backTop'>
+  <image src='/assets/ico_back_top.svg'></image>
+  <!-- 回到顶部 -->
+</view>

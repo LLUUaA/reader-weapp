@@ -50,3 +50,17 @@ export function getChapterList(bookId, pageIndex = 1) {
     api: `book/chapter/other/${bookId}/${pageIndex}`
   });
 }
+
+
+export function getBookType (type){
+  return request({
+    api: `book${type}`
+  });
+}
+
+
+export function getAuthorBook (author) {
+  return request({
+    api: `book/author/${author}`
+  });
+}

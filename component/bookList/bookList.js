@@ -5,9 +5,14 @@ Component({
    */
   properties: {
     bookList: {
-    type: Array,
-    value: null
-  },
+      type: Array,
+      value: null
+    },
+
+    noMore:{
+      type: Boolean,
+      value: false
+    }
   },
 
   /**
@@ -21,11 +26,12 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    toDetail(event){
+    toDetail(event) {
       const { bookId } = event.target.dataset;
       wx.navigateTo({
         url: `../bookDetail/bookDetail?bookId=${bookId}`,
       })
     }
+
   }
 })

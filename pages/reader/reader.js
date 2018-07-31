@@ -214,8 +214,11 @@ Page({
    * @param {Number} chapterNum
    */
   getReader(bookId, chapterNum = 1) {
+
+    wx.showNavigationBarLoading();
     readBook(bookId, chapterNum)
       .then(res => {
+        wx.hideNavigationBarLoading();
         if (!res || !res.chapterContent.length) return;
         wx.setNavigationBarTitle({
           title: res.chapterName || 'reader'
@@ -230,6 +233,12 @@ Page({
             scrollTop: 0,
             duration: 0
           })
+        })
+      },err=>{
+        wx.hideNavigationBarLoading();
+        wx.showToast({
+          title: '获取失败，请重试。',
+          icon: 'none'
         })
       })
   },

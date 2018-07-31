@@ -8,7 +8,7 @@
       </view>
       <view class="info ft-small color-black2">
         <view class="name color-black">书名 {{bookInfo.bookName||'--'}}</view>
-        <view>作者：{{bookInfo.bookAuthor||'--'}}</view>
+        <view catchtap='toAuthorBook'>作者：{{bookInfo.bookAuthor||'--'}}</view>
         <view>{{bookInfo.chapter||'作品类别'}}</view>
         <view>进度: {{bookInfo.status||'--'}}</view>
         <!-- <view>更新: xx</view> -->

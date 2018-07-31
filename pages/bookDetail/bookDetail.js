@@ -18,6 +18,13 @@ Page({
     this.checkAddBookShelf(options.bookId);
   },
 
+
+  toAuthorBook(){
+    wx.navigateTo({
+      url: '../authorBook/authorBook?author=' + this.data.bookInfo.bookAuthor,
+    })
+  },
+
   //检查是否加入书架
   checkAddBookShelf(bookId) {
     const checkBack = checkBookShelf(bookId);

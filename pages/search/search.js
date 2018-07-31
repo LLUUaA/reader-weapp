@@ -9,6 +9,7 @@ Page({
     searchValue: null,
     bookList: null,
     isLastPage: null,
+    pageScroll:null,
     pageIndex: null
   },
   onLoad: function(options) {
@@ -73,6 +74,12 @@ Page({
 
   onReachBottom: function() {
     this.submit(true); //分页
+  },
+
+  onPageScroll(event) {
+    this.setData({
+      pageScroll: event
+    })
   },
 
   onShareAppMessage: function() {

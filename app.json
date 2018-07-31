@@ -6,7 +6,8 @@
     "pages/search/search",
     "pages/bookDetail/bookDetail",
     "pages/chapterDetails/chapterDetails",
-    "pages/reader/reader"
+    "pages/reader/reader",
+    "pages/authorBook/authorBook"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -29,6 +30,6 @@
         "text": "推荐"
       }
     ],
-    "selectedColor":"#1296db"
+    "selectedColor": "#1296db"
   }
 }
