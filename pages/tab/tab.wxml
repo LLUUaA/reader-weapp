@@ -1,5 +1,5 @@
 <!--pages/tab/tab.wxml-->
-<view class='ft-middle color-black cate'>
+<view wx:if="{{maleMenu}}" class='ft-middle color-black cate'>
   <view class='title flex line'>
     <view>分类</view>
     <view class='ft-small'>{{totalBook|| '' }}</view>
@@ -14,7 +14,6 @@
     女频:
     <text wx:for="{{femaleMenu}}" wx:key="{{item.href}}" data-index="{{index}}" class="{{item.current?'current':''}}"> {{item.subTxt}} </text>
   </view>
-
 </view>
 
 <bookList bookList="{{hotBook}}" />
