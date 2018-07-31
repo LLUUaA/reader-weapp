@@ -114,6 +114,7 @@ Page({
       .then(res => {
         wx.stopPullDownRefresh();
         this.setData({
+          totalBook:null,
           hotBook: res.hotBook,
           maleMenu: res.maleMenu,
           femaleMenu: res.femaleMenu
@@ -131,6 +132,7 @@ Page({
 
   onPullDownRefresh:function(){
     this.getBook();
+
   },
 
   onReachBottom:function(){
