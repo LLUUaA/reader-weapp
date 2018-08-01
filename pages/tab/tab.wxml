@@ -1,5 +1,5 @@
 <!--pages/tab/tab.wxml-->
-<view wx:if="{{maleMenu}}" class='ft-middle color-black cate'>
+<view wx:if="{{maleMenu&&showType}}" class='ft-middle color-black cate'>
   <view class='title flex line'>
     <view>分类</view>
     <view class='ft-small'>{{totalBook|| '' }}</view>

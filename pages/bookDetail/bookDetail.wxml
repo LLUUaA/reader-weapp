@@ -23,4 +23,5 @@
     <chapterList bookId="{{bookId}}" />
     <view class="nomore" bindtap="toChapterDetails">点击查看更多章节</view>
   </view>
+  <backTop pageScroll="{{pageScroll}}" />
 </block>

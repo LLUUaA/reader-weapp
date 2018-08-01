@@ -43,8 +43,13 @@ Component({
     getChapter(bookId, pageIndex) {
       getChapterList(bookId, pageIndex)
         .then(res => {
+          let chapterList = res.chapterList;
+          if (!this.data.moreChapter) {
+            chapterList.splice(30, res.chapterList.length);
+          }
+
           this.setData({
-            chapterList: res.chapterList,
+            chapterList,
             chapterPager: res.chapterPager,
             pageIndex: res.pageIndex
           },()=>{

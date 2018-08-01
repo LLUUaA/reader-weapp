@@ -270,9 +270,10 @@ Page({
   },
 
   onShareAppMessage: function () {
-    return {
-      title: this.data.chapterName||'Reader',
-      path: `pages/reader/reader?bookId=${this.data.bookId}&chapterNum=${this.data.chapterNum}`
-    }
+    return app.getShareMsg({
+      title: this.data.chapterName || 'Reader',
+      path: `pages/reader/reader?bookId=${this.data.bookId}&chapterNum=${this.data.chapterNum}`,
+      key: 'reader'
+    });
   }
 })

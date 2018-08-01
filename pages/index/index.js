@@ -79,10 +79,17 @@ Page({
   },
 
   onShareAppMessage: function () {
-    return {
+
+    // return {
+    //   title: '青莲一叶',
+    //   path: 'pages/index/index'
+    // }
+
+    return app.getShareMsg({
       title: '青莲一叶',
-      path: 'pages/index/index'
-    }
+      path: 'pages/index/index',
+      key:'index'
+    });
   }
 
 })

@@ -1,32 +1,41 @@
 // pages/tab/tab.js
-import { getHotBook, getBookType } from '../../service/book.js';
+import {
+  getHotBook,
+  getBookType
+} from '../../service/book.js';
+
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    hotBook:null,
-    nextPage:null,
-    totalBook:null,
-    pageScroll:null
+    hotBook: null,
+    nextPage: null,
+    totalBook: null,
+    showType: null,
+    pageScroll: null
   },
 
   onLoad: function (options) {
     // this.getBook();
   },
 
-  onShow:function(){
+  onShow: function () {
     if (!this.data.hotBook) {
       this.getBook();
+      this.setData({
+        showType: app.gConfig.tab ? app.gConfig.tab.showBookType : false,
+      })
     }
-  }, 
+  },
 
 
   /**
    * @desc 获取分类
    */
-  getBookType(type,page = false) {
+  getBookType(type, page = false) {
 
     let nextPage = this.data.nextPage;
     if (page && !nextPage) return;
@@ -36,9 +45,9 @@ Page({
       .then(res => {
         let hotBook = this.data.hotBook || [],
           nextPage;
-        if(page) {
+        if (page) {
           hotBook = hotBook.concat(res.bookList);
-        }else{
+        } else {
           hotBook = res.bookList;
         }
 
@@ -60,6 +69,8 @@ Page({
   choose(event) {
     const { cate } = event.currentTarget.dataset;
     const { index } = event.target.dataset;
+
+    if (undefined === index) return;
 
     const resetCurrent = () => {
       return new Promise((resolve, reject) => {
@@ -109,41 +120,42 @@ Page({
     })
   },
 
-  getBook(){
+  getBook() {
     getHotBook()
       .then(res => {
         wx.stopPullDownRefresh();
         this.setData({
-          totalBook:null,
+          totalBook: null,
           hotBook: res.hotBook,
           maleMenu: res.maleMenu,
           femaleMenu: res.femaleMenu
         })
-      },err=>{
+      }, err => {
         wx.stopPullDownRefresh();
       })
   },
 
-  onPageScroll(event){
+  onPageScroll(event) {
     this.setData({
       pageScroll: event
     })
   },
 
-  onPullDownRefresh:function(){
+  onPullDownRefresh: function () {
     this.getBook();
 
   },
 
-  onReachBottom:function(){
-    
-    this.getBookType(this.data.nextPage,true);
+  onReachBottom: function () {
+
+    this.getBookType(this.data.nextPage, true);
   },
 
   onShareAppMessage: function () {
-    return {
+    return app.getShareMsg({
       title: '给你想看的',
-      path: 'pages/tab/tab'
-    }
+      path: 'pages/tab/tab',
+      key: 'tab'
+    });
   }
 })

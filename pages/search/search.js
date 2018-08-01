@@ -3,6 +3,8 @@ import {
   searchBook
 } from '../../service/book.js';
 let lock = false;
+const app = getApp()
+
 Page({
 
   data: {
@@ -83,9 +85,15 @@ Page({
   },
 
   onShareAppMessage: function() {
-    return {
+    // return {
+    //   title: '搜索你想看的',
+    //   path: 'pages/search/search'
+    // }
+
+    return app.getShareMsg({
       title: '搜索你想看的',
-      path: 'pages/search/search'
-    }
+      path: 'pages/search/search',
+      key: 'search'
+    });
   }
 })

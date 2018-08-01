@@ -2,12 +2,15 @@
 
 import { getBook } from '../../service/book.js';
 import { addBookShelf, checkBookShelf } from '../../utils/book.js';
+const app = getApp()
+
 Page({
 
   data: {
     bookId: null,
     isAddBookShelf: false,//是否加入书架
     lastChapterNum: null,//上一次阅读章节
+    pageScroll: null
   },
   onLoad: function (options) {
     this.setData({
@@ -73,10 +76,22 @@ Page({
     })
   },
 
+  onPageScroll(event) {
+    this.setData({
+      pageScroll: event
+    })
+  },
+
   onShareAppMessage: function () {
-    return {
-      title: '搜索你想看的',
-      path: 'pages/bookDetail/bookDetail?bookId=' + this.data.bookId
-    }
+    // return {
+    //   title: '搜索你想看的',
+    //   path: 'pages/bookDetail/bookDetail?bookId=' + this.data.bookId
+    // }
+
+    return app.getShareMsg({
+      title: this.data.bookInfo.bookName || '这是一本有趣的书,你也来看看吧。',
+      path: 'pages/bookDetail/bookDetail?bookId=' + this.data.bookId,
+      key: 'bookDetail'
+    });
   }
 })

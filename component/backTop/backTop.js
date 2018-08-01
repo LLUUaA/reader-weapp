@@ -1,19 +1,7 @@
 // component/backTop/backTop.js
+const SHOW_TOP = 300;
 
-const SHOW_TOP = 300,
-  D_TIME = 1000 / 60;
-var timeOut;
-
-/**
- * @function {Throttle} 函数节流
- * @param {fn} function
- * @param {t} time
- * 
- */
-function Throttle(fn, t = D_TIME) {
-  clearTimeout(timeOut);
-  timeOut = setTimeout(fn,t)
-}
+import { Throttle } from '../../utils/lib/index.js';
 
 Component({
   /**
@@ -29,7 +17,6 @@ Component({
       type: null,
       value: null,
       observer: function(newVal, oldVal, changedPath) {
-        // console.log(newVal);
         if (newVal.scrollTop && newVal !== oldVal) {
           Throttle(this.handleScroll.bind(this, newVal.scrollTop));
         }
