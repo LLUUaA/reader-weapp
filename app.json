@@ -7,7 +7,8 @@
     "pages/bookDetail/bookDetail",
     "pages/chapterDetails/chapterDetails",
     "pages/reader/reader",
-    "pages/authorBook/authorBook"
+    "pages/authorBook/authorBook",
+    "pages/mine/mine"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -28,8 +29,15 @@
         "iconPath": "/assets/recommend.png",
         "selectedIconPath": "/assets/recommend_h.png",
         "text": "推荐"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "iconPath": "/assets/ico_mine.png",
+        "selectedIconPath": "/assets/ico_mine_h.png",
+        "text": "我的"
       }
     ],
+    "color":"#cdcdcd",
     "selectedColor": "#1296db"
   }
 }

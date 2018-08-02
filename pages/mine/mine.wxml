@@ -1,0 +1,35 @@
+<!--pages/mime/mine.wxml-->
+
+<view class='mine ft-middle'>
+  <view class='user wrap'>
+    <view class="avatarUrl">
+      <open-data type="userAvatarUrl"></open-data>
+    </view>
+    <view class="cickName">
+      <open-data type="userNickName"></open-data>
+    </view>
+  </view>
+  <view class='wrap'>
+    <view class='row flex'>
+      <image class='icon' src='/assets/ico_feedback.svg'></image>
+      <button class='nbtn' open-type='feedback'>意见反馈</button>
+      <image class='icon-arrow' src='/assets/ico_arrow.svg'></image>
+    </view>
+    <view class='row flex'>
+      <image class='icon' src='/assets/ico_contact.svg'></image>
+      <button class='nbtn' open-type='contact'>联系客服</button>
+      <image class='icon-arrow' src='/assets/ico_arrow.svg'></image>
+    </view>
+    <view class='row flex'>
+      <image class='icon' src='/assets/ico_aboutme.svg'></image>
+      <button class='nbtn'>关于作者</button>
+      <image class='icon-arrow' src='/assets/ico_arrow.svg'></image>
+    </view>
+    <view class='row flex'>
+      <image class='icon' src='/assets/ico_help.svg'></image>
+      <button class='nbtn'>帮助</button>
+      <image class='icon-arrow' src='/assets/ico_arrow.svg'></image>
+    </view>
+  </view>
+  <view class='version color-grey ft-small'>版本:{{version}}</view>
+</view>

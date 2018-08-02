@@ -1,6 +1,6 @@
 <view>
   <view class="search flex">
-    <input class="search-btn ft-small" data-name="searchValue" focus confirm-type="search" bindinput="inputTxt" bindconfirm="clickSubmit" placeholder="点击搜索" />
+    <input class="search-btn ft-small bg-grey" data-name="searchValue" focus confirm-type="search" bindinput="inputTxt" bindconfirm="clickSubmit" placeholder="点击搜索" />
     <image class="img" bindtap="clickSubmit" src="../../assets/icon_search.svg" />
   </view>
   <bookList bookList="{{bookList}}" />

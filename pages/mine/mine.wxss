@@ -1,0 +1,55 @@
+/* pages/mime/mine.wxss */
+.mine {
+  padding: 10rpx 20rpx;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f7f7f7;
+}
+
+.mine .user{
+  text-align: center;
+}
+
+.mine .avatarUrl{
+  width: 200rpx;
+  height: 200rpx;
+  margin: 0 auto;
+  /* border: 1px solid #cccccc; */
+}
+
+.mine .nbtn{
+  text-align: start;
+  font-size: 32rpx;
+  width: 100%;
+  color: #333;   
+}
+
+.mine .wrap{
+  box-shadow: 0 1px 5rpx rgba(0, 0, 0, .1);
+  padding: 20rpx;
+  margin-bottom: 25rpx;
+  border-radius: 10rpx;
+  background-color: #ffffff;
+}
+
+.wrap .row{
+  align-items: center;
+  padding: 10rpx 0;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.wrap .icon{
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 20rpx;
+}
+
+.wrap .icon-arrow{
+  width: 60rpx;
+  height: 60rpx;
+}
+.mine .version {
+  text-align: center;
+  letter-spacing: .5rpx;
+  font-weight: normal;
+}

@@ -1,5 +1,10 @@
+var env, devEnv = false;
 
-var env, devEnv = true;
+env = {
+  ver: "v1.0.2",
+  ENV: devEnv
+}
+
 /**
  * 开发环境
  */
@@ -15,6 +20,6 @@ const pro = {
   host: "https://api.bubaocloud.xin/"
 }
 
-env = devEnv ? dev : pro;
+env = Object.assign(env, devEnv ? dev : pro);
 
 module.exports = env

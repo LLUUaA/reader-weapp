@@ -88,3 +88,28 @@ button{
     text-align: center;
     margin: 20rpx 0;
 }
+
+.nbtn {
+  position: relative;
+  display: block;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* font-size: 28rpx; */
+  text-decoration: none;
+  line-height: 1;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  z-index: 1;
+}
+
+.nbtn::after {
+  border: none;
+}
+
+.nbtn:link, .nbtn:active, .nbtn:visited, .nbtn:hover {
+  background: #fff;
+  transition: 0s;
+}
