@@ -10,8 +10,15 @@ Page({
   },
 
   onLoad: function (options) {
-    console.log(123,env);
+    // console.log(123,env);
 
+  },
+
+  toPage(event) {
+    const { page } = event.currentTarget.dataset;
+    wx.navigateTo({
+      url: '../otherPage/otherPage?pageName=' + page,
+    })
   },
 
   onShareAppMessage: function () {

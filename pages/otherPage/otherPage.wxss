@@ -1,0 +1,192 @@
+/* pages/moreComment/moreComment.wxss */
+
+view, image, text {
+    /* outline: 1px solid red;    */
+}
+
+.morecomment-box {
+  margin: 0 40rpx;
+  box-sizing: border-box;
+}
+
+.morecomments {
+  display: flex;
+  justify-content: flex-start;
+   align-items: center; 
+}
+
+.morecomment-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 80rpx;
+  margin-right: 35rpx;
+}
+
+.morecomment {
+  border-bottom: 1rpx solid #d7dced;
+  padding: 15rpx 0  35rpx 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.myname {
+  margin-right: 35rpx;
+}
+
+.more-reply {
+  margin-left: 115rpx;
+}
+
+/* help center  */
+.help-center{
+  padding: 0 20rpx;
+  border-top: 15rpx solid #F0EFF6;
+}
+
+.title{
+  position: relative;
+  color: #363636;
+  font-weight: bold;
+  letter-spacing: .2px;
+  margin: 30rpx;
+}
+
+.title::before{
+  content: '';
+  position: absolute;
+  left: -25rpx;
+  bottom: 0; 
+  width: 10rpx;
+  height: 40rpx;
+  background: #1296db;
+}
+
+.tips{
+  text-align: center;
+  color: #999999;
+  font-weight: 400;
+  font-size: 28rpx;
+  letter-spacing: .1px;
+  opacity: .95;
+}
+
+.tips2{
+  text-align: center;
+  color: #666666;
+  font-weight: 500;
+  margin-top: 10rpx;
+  letter-spacing: .5px;
+  font-size: 32rpx;
+}
+
+.list{
+  padding: 20rpx;
+  margin: 15rpx 0;
+  font-size: 32rpx;
+  overflow: hidden;
+  /* transition: all .3s; */
+  color: #999999;
+  border: 1px solid #E0E0E0;
+  border-radius: 8rpx;
+}
+
+.list .question{
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  color: #333333;
+  border-top: 1px solid #E0E0E0;
+}
+.question .row{
+  font-weight: 300;
+  left: .5px;
+}
+
+.list .txt{
+  display: inline-block;
+  font-weight: 500;
+}
+
+.list.open{
+  background-color:#F5F5F5;
+  
+}
+.list.close{
+  background-color:#ffffff; 
+
+}
+
+.list.open .question{
+display: block; 
+}
+
+.list.close .question{
+    display: none;
+}
+
+.list.open .arrow{
+  transform: rotate(270deg) 
+}
+
+
+.list .arrow{
+  float: right;
+  margin-right: 0;
+  width: 40rpx;
+  height: 40rpx;
+  opacity: .95;
+  transform: rotate(90deg) 
+}
+.list .arrow image{
+  width: 100%;
+  height: 100%;
+
+}
+
+.contact-btn{
+  position: fixed;
+  width: 100%;
+  padding: 30rpx 0;
+  bottom: 0;
+  color: #ffffff;
+  border-radius: 0;
+  left: 0;
+  background-color: #1296db;
+}
+
+.contact-btn:active,.contact-btn:hover{
+  background-color: rgba(18, 150, 219,.9);
+}
+
+/*about-me  */
+
+.about-me-bg{
+  width: 100%;
+  height: 250rpx;
+}
+
+.about-me {
+  padding: 20rpx;
+}
+.about-me .intro{
+  
+}
+
+.about-me .author{
+  text-align: center;
+}
+
+.about-me .support{
+  text-align: center;
+}
+
+.about-me .support image{
+  width: 350rpx;
+  height: 350rpx;
+  /* flex: 1; */
+}
+
+.about-me .author .img{
+  width: 180rpx;
+  height: 180rpx;
+  border: 1px solid #E0E0E0;
+}

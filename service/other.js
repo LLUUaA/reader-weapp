@@ -1,7 +1,8 @@
 import request from './request';
 
-export function getConfig() {
+export function getConfig(data) {
   return request({
-    api: `book/getConfig`
+    api: `book/getConfig`,
+    data
   });
 }

@@ -8,13 +8,35 @@
 
 .mine .user{
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.mine .user .bg{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* background-color: rgba(0, 0, 0, .9); */
+  left: 0;
+  top: 0;
+  z-index: -1;
+  filter: blur(15px);
+}
+
+.mine .user .nickName{
+  /* padding: 15rpx 0; */
+  padding-top: 15rpx;
 }
 
 .mine .avatarUrl{
   width: 200rpx;
   height: 200rpx;
-  margin: 0 auto;
+   margin: 0 auto; 
   /* border: 1px solid #cccccc; */
+  z-index: 2;
+  /* background-color: #ffffff; */
+
 }
 
 .mine .nbtn{

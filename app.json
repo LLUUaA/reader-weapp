@@ -8,7 +8,8 @@
     "pages/chapterDetails/chapterDetails",
     "pages/reader/reader",
     "pages/authorBook/authorBook",
-    "pages/mine/mine"
+    "pages/mine/mine",
+    "pages/otherPage/otherPage"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -37,7 +38,7 @@
         "text": "我的"
       }
     ],
-    "color":"#cdcdcd",
+    "color": "#cdcdcd",
     "selectedColor": "#1296db"
   }
 }

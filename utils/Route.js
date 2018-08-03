@@ -42,7 +42,7 @@ module.exports={
       if(currentLength>1){
         wx.navigateBack()
       }else{
-        wx.redirectTo({
+        wx.switchTab({
           url: '../index/index',
         })
       }

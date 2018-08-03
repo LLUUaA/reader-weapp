@@ -1,0 +1,43 @@
+<!--pages/otherPage/otherPage.wxml-->
+<block wx:if="{{isHelpCenter}}">
+  <view class='help-center'>
+    <view class='title ft-middle'>在线客服</view>
+    <view class='tips'>使用过程中出现任何疑问</view>
+    <view class='tips2'>请咨询客服</view>
+
+    <view class='title ft-middle'>常见问题</view>
+    <view class='quest-conent'>
+      <view wx:for="{{helpContent}}" class="list {{item.open?'open':'close'}}" id="{{index}}" bindtap='openQuestion'>
+        <view class='txt'>{{item.Title}}</view>
+        <view class='arrow'>
+          <image src='/assets/ico_arrow.svg'></image>
+        </view>
+        <view class='question'>
+          <view wx:for="{{item.Content}}" wx:for-item="content" class='row'>{{content}}</view>
+        </view>
+      </view>
+    </view>
+    <view style='height:100rpx;opacity:0'>wqs</view>
+    <button open-type="contact" class='black nbtn ft-middle contact-btn'>联系在线客服</button>
+  </view>
+</block>
+
+<block wx:if="{{isAboutMe}}">
+  <image wx:if="{{aboutMe.bgImg}}" mode="aspectFill" class='about-me-bg' src="{{aboutMe.bgImg}}"></image>
+  <view class='about-me'>
+    <view class='title ft-middle'>{{aboutMe.authorTxt}}</view>
+    <view class='author' bindtap='alertWeixin'>
+      <image class='img' src="{{aboutMe.authorAvatarUrl}}"></image>
+      <view>{{aboutMe.authorName}}</view>
+    </view>
+    <view class='title ft-middle'>{{aboutMe.introTxt}}</view>
+    <text class='intro ft-middle color-black'>{{aboutMe.personIntro}}</text>
+
+    <view wx:if="{{aboutMe.weixinPay||aboutMe.aliPay}}" class='title ft-middle'>{{aboutMe.supportTxt}}</view>
+    <view class='support flex' bindtap='showQrcode'>
+      <image src="{{aboutMe.weixinPay}}" data-index="1" ></image>
+      <image src="{{aboutMe.aliPay}}" data-index="2" ></image>
+    </view>
+  </view>
+
+</block>
