@@ -1,7 +1,7 @@
 var env, devEnv = true;
 
 env = {
-  ver: "v1.0.2",
+  ver: "v1.0.3",
   ENV: devEnv
 }
 

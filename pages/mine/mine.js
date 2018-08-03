@@ -10,7 +10,6 @@ Page({
   },
 
   onLoad: function (options) {
-    // console.log(123,env);
 
   },
 
