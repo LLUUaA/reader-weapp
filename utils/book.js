@@ -20,7 +20,7 @@ function checkBook(bookId, backData = true) {
    *       2.直接push ->读取速度快，缺点：每次新增、删除需要遍历查重
    */
   data.forEach((item, idx) => {
-    if (item && item.bookId === bookId) {
+    if (item && item.bookId == bookId) {
       isExist = true;
       index = idx;
       readChapter = item.readChapter;
@@ -91,6 +91,7 @@ export function getAddBookShelf() {
  */
 export function updateChapter(bookId, readChapter) {
   const checkBack = checkBook(bookId);
+
   if (checkBack.isExist&&checkBack.index >= 0) {
     //如果index存在说明已加入书架
     let data = checkBack.data;
