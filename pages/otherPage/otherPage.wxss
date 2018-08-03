@@ -168,7 +168,7 @@ display: block;
   padding: 20rpx;
 }
 .about-me .intro{
-  
+  line-height: 1.5;
 }
 
 .about-me .author{

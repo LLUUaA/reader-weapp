@@ -1,5 +1,6 @@
 // pages/mime/mine.js
 import env from '../../service/env.js';
+const app = getApp();
 Page({
 
   /**
@@ -21,6 +22,10 @@ Page({
   },
 
   onShareAppMessage: function () {
-  
+    return app.getShareMsg({
+      title: this.data.chapterName || '我的',
+      path: `pages/mine/mine`,
+      key: 'reader'
+    });
   }
 })

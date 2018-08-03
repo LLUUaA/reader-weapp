@@ -12,7 +12,9 @@ App({
  * @desc 获取配置文件
  */
   getConfig () {
-    getConfig()
+    getConfig({
+      name: 'gConfig2'
+    })
       .then(res=>{
         this.gConfig = res;
       })

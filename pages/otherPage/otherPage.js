@@ -38,7 +38,7 @@ Page({
         this.setData({
           isAboutMe: true
         })
-        
+
         this.getAboutMe();
         break;
       default:
@@ -104,9 +104,6 @@ Page({
     this.setData({
       helpContent
     })
-  },
-
-  onShareAppMessage: function () {
-
   }
+
 })
