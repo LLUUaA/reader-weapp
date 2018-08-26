@@ -1,50 +1,66 @@
 // pages/reader/reader.js
 
-import { readBook } from '../../service/book.js';
-import { updateChapter } from '../../utils/book.js';
-const READER_SETTING_KEY = 'readerSettingKey';//阅读设置key
+import {
+  readBook,
+  getLastRead
+} from '../../service/book.js';
+import {
+  updateChapter,
+  checkBookShelf
+} from '../../utils/book.js';
+const READER_SETTING_KEY = 'readerSettingKey'; //阅读设置key
 const fontSizeInterval = {
   max: 40,
   min: 26
-};//字体区间 step->2rpx
+}; //字体区间 step->2rpx
 
 const lineHeightInterval = {
   max: 2.5,
   min: 1.5
-};//行高区间 step->0.1
+}; //行高区间 step->0.1
 
 const backgroundList = ['#EAEAEF', '#FDE6E0', '#FAF9DE', '#DCE2F1', '#E3EDCD', '#DCE2F1', '#E9EBFE'];
 const app = getApp();
 
 Page({
-
   data: {
     bookId: null,
     chapterNum: null,
     chapterName: null,
     chapterContent: null,
     backgroundList: backgroundList,
-    readerSetting: null,//阅读设置（字号、行高、背景）
-    showSetting: null
+    readerSetting: null, //阅读设置（字号、行高、背景）
+    showSetting: null,
+    hideLastReadTimes: 3, //3秒后隐藏
+    lastReadChapterNum: null,
+    showLastRead:false
   },
 
-  isReaderPage:true,
-
-  onLoad: function (options) {
-    const { bookId, chapterNum } = options;
+  isReaderPage: true,
+  onLoad: function(options) {
+    const {
+      bookId,
+      chapterNum
+    } = options;
 
     if (!bookId) return;
+    this.getReader(bookId, chapterNum)
+      .then(res => {
+        this.getLastRead(bookId)
+      })
 
+    this.getReaderSetting();
     this.setData({
       bookId
     })
-    this.getReader(bookId, chapterNum);
-    this.getReaderSetting();
   },
 
   onShow() {
     if (app.chapterInfo) {
-      const { bookId, chapterNum } = app.chapterInfo;
+      const {
+        bookId,
+        chapterNum
+      } = app.chapterInfo;
 
       if (!bookId) return;
       this.setData({
@@ -54,11 +70,51 @@ Page({
       this.getReaderSetting();
       delete app.chapterInfo;
     }
-
   },
 
+  toLastRead() {
+    this.getReader(this.data.bookId, this.data.lastReadChapterNum);
+    this.clear();
+  },
 
-  touchstart:null,
+  clear() {
+    if (this.getLastRead.timer) {
+      clearInterval(this.getLastRead.timer);
+      this.getLastRead.timer = null;
+      this.setData({
+        showLastRead:null
+      })
+    }
+  },
+
+  getLastRead(bookId) {
+    if (checkBookShelf(bookId).isExist) {
+      //如果加入了书架
+      return;
+    }
+    getLastRead(bookId).then(res => {
+      if (!res || res === 1) return; //如果没有看过或者是第一章
+      this.getLastRead.timer = setInterval(() => {
+        let hideLastReadTimes = this.data.hideLastReadTimes;
+        if (hideLastReadTimes === 0) {
+          this.clear();
+          return;
+        }
+        hideLastReadTimes--;
+        this.setData({
+          hideLastReadTimes: hideLastReadTimes
+        })
+      }, 1000);
+      this.setData({
+        lastReadChapterNum: res,
+        showLastRead:true
+      })
+    }, err => {
+
+    })
+  },
+
+  touchstart: null,
   // move事件处理
   moveEvent(event) {
     const getDirection = (touchEnd) => {
@@ -67,7 +123,7 @@ Page({
         offsetY = 50;
       const moveX = touchEnd.clientX - touchStart.clientX,
         moveY = Math.abs(touchEnd.clientY - touchStart.clientY);
-        
+
       if (moveX > offsetX && moveY < offsetY) {
         //向右划
         return 'left'
@@ -116,7 +172,11 @@ Page({
   },
 
   changeSetting(event) {
-    const { cate, handle, index } = event.target.dataset;
+    const {
+      cate,
+      handle,
+      index
+    } = event.target.dataset;
     let readerSetting = this.data.readerSetting;
     switch (cate) {
       case 'size':
@@ -129,7 +189,7 @@ Page({
               })
               return;
             }
-            readerSetting.fontSize += 2;//step=2
+            readerSetting.fontSize += 2; //step=2
             break;
           case 'reduce':
             if (readerSetting.fontSize <= fontSizeInterval.min) {
@@ -139,13 +199,13 @@ Page({
               })
               return;
             }
-            readerSetting.fontSize -= 2;//step=2
+            readerSetting.fontSize -= 2; //step=2
             break;
           default:
             break;
         }
         break;
-   
+
       case 'line':
         switch (handle) {
           case 'add':
@@ -180,7 +240,7 @@ Page({
         })
         break;
       default:
-      return;
+        return;
     }
 
     this.setData({
@@ -200,7 +260,7 @@ Page({
     })
   },
 
-  closeSetting(){
+  closeSetting() {
     this.setData({
       showSetting: false
     })
@@ -214,33 +274,36 @@ Page({
    * @param {Number} chapterNum
    */
   getReader(bookId, chapterNum = 1) {
-
-    wx.showNavigationBarLoading();
-    readBook(bookId, chapterNum)
-      .then(res => {
-        wx.hideNavigationBarLoading();
-        if (!res || !res.chapterContent.length) return;
-        wx.setNavigationBarTitle({
-          title: res.chapterName || 'reader'
-        })
-        this.setData({
-          chapterNum,
-          chapterName: res.chapterName,
-          chapterContent: res.chapterContent || []
-        }, () => {
-          updateChapter(bookId, chapterNum);
-          wx.pageScrollTo({
-            scrollTop: 0,
-            duration: 0
+    return new Promise((resolve, reject) => {
+      wx.showNavigationBarLoading();
+      readBook(bookId, chapterNum)
+        .then(res => {
+          wx.hideNavigationBarLoading();
+          resolve();
+          if (!res || !res.chapterContent.length) return;
+          wx.setNavigationBarTitle({
+            title: res.chapterName || 'reader'
+          })
+          this.setData({
+            chapterNum,
+            chapterName: res.chapterName,
+            chapterContent: res.chapterContent || []
+          }, () => {
+            updateChapter(bookId, chapterNum);
+            wx.pageScrollTo({
+              scrollTop: 0,
+              duration: 0
+            })
+          })
+        }, err => {
+          reject();
+          wx.hideNavigationBarLoading();
+          wx.showToast({
+            title: '获取失败，请重试。',
+            icon: 'none'
           })
         })
-      },err=>{
-        wx.hideNavigationBarLoading();
-        wx.showToast({
-          title: '获取失败，请重试。',
-          icon: 'none'
-        })
-      })
+    })
   },
 
   /**
@@ -269,7 +332,11 @@ Page({
     lineHeight: 2
   },
 
-  onShareAppMessage: function () {
+  onUnload:function() {
+    this.clear();
+  },
+
+  onShareAppMessage: function() {
     return app.getShareMsg({
       title: this.data.chapterName || 'Reader',
       path: `pages/reader/reader?bookId=${this.data.bookId}&chapterNum=${this.data.chapterNum}`,

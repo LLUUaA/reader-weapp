@@ -1,7 +1,6 @@
 //app.js
 import { getConfig } from './service/other';
 
-
 App({
   onLaunch: function () {
     this.getConfig();
@@ -26,7 +25,9 @@ App({
   getShareMsg(obj) {
     return Object.assign(obj, this.gConfig[obj.key] ? this.gConfig[obj.key].share : {})
   },
-
-  gConfig:{}
-
+  gConfig:{},
+  globalData: {
+    userInfo: null,
+    session: null,
+  }
 })

@@ -1,12 +1,6 @@
-
-
+// 使用本地存储
 const BOOK_SHELF_KEY = 'bookShelfKey', MAX_BOOK_SHELF = 50;//BOOK_SHELF_KEY->key MAX_BOOK_SHELF->允许最大书架数量
-import { 
-  getBookShelf as getBookShelfSer,
-  addBookShelf as addBookShelfSer 
-  } from '../service/book.js';
-
-
+import { chapterRecor } from '../service/book.js';
 
 /**
  * @function checkBook
@@ -42,7 +36,6 @@ function checkBook(bookId, backData = true) {
 /**
  * @param {Object} book
  * @param {boolean} add --默认添加书架
- * @param {any} cb 
  * @desc 添加收藏
  */
 export function addBookShelf(book, add = true, cb) {
@@ -62,21 +55,10 @@ export function addBookShelf(book, add = true, cb) {
   if (add) {
     //如果是添加
     data.unshift(book);
-    addBookShelfSer({
-      bookId: book.bookId,
-      bookInfo: book,
-      status: 1
-    })
   } else {
     //如果是移除
     data.splice(checkBack.index, 1);
-    addBookShelfSer({
-      bookId: book.bookId,
-      bookInfo: book,
-      status: 0
-    })
   }
-
   wx.setStorage({
     key: BOOK_SHELF_KEY,
     data,
@@ -100,30 +82,7 @@ export function checkBookShelf(bookId) {
  * @returns array
  */
 export function getAddBookShelf() {
-  return new Promise((resolve, reject) => {
-    let bookList = [];
-    bookList = wx.getStorageSync(BOOK_SHELF_KEY) || [];
-    if (bookList.length) {
-      //当本地缓存存在时不去后台获取数据
-      resolve(bookList);
-    } else {
-      wx.showNavigationBarLoading();
-      getBookShelfSer().then(res => {
-        wx.hideNavigationBarLoading();
-        res.forEach(item => {
-          bookList.push(JSON.parse(item.book_info));
-        })
-        wx.setStorage({
-          key: BOOK_SHELF_KEY,
-          data: bookList,
-        })
-        resolve(bookList);
-      })
-      .catch(err=>{
-        wx.hideNavigationBarLoading();
-      })
-    }
-  })
+  return wx.getStorageSync(BOOK_SHELF_KEY) || [];
 }
 
 /**
@@ -131,6 +90,10 @@ export function getAddBookShelf() {
  */
 export function updateChapter(bookId, readChapter) {
   const checkBack = checkBook(bookId);
+  chapterRecor({
+    id: bookId,
+    num: readChapter
+  })
   if (checkBack.isExist&&checkBack.index >= 0) {
     //如果index存在说明已加入书架
     let data = checkBack.data;

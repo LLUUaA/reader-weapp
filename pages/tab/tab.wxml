@@ -1,5 +1,5 @@
 <!--pages/tab/tab.wxml-->
-<view wx:if="{{maleMenu&&showType}}" class='ft-middle color-black cate'>
+<view id='cate' wx:if="{{maleMenu&&showType}}" class="ft-middle color-black cate">
   <view class='title flex line'>
     <view>分类</view>
     <view class='ft-small'>{{totalBook|| '' }}</view>
@@ -14,6 +14,12 @@
     女频:
     <text wx:for="{{femaleMenu}}" wx:key="{{item.href}}" data-index="{{index}}" class="{{item.current?'current':''}}"> {{item.subTxt}} </text>
   </view>
+</view>
+<view wx:if="{{cateQuery.per}}" style="opacity:{{cateQuery.per}};" class='fix-cate flex ft-middle' catchtap='choose' data-cate='other'>
+  <!--{{showCate}}  -->
+  <view data-index="1" class="{{!maleMenu[0].current&&!femaleMenu[0].current?'current2':''}}">热门</view>
+  <view data-index="2" class="{{maleMenu[0].current?'current2':''}}">男频</view>
+  <view data-index="3" class="{{femaleMenu[0].current?'current2':''}}">女频</view>
 </view>
 
 <bookList bookList="{{hotBook}}" />

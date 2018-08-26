@@ -1,26 +1,36 @@
 import env from './env';
-
-
-export default (options) => {
+import getSession from './account.js';
+export default (options, needSession = true) => {
   return new Promise((resolve, reject) => {
-    options = Object.assign({
-      url: env.host,
-      api: '',
-      data: {},
-      method: 'GET',
-      success: (res) => {
-        if (res.data.code === -1) {
-          reject(res.data);
-        } else {
-          resolve(res.data)
+    const excuteRequest = (session) => {
+      options = Object.assign({
+        url: env.host,
+        api: '',
+        data: {},
+        method: 'GET',
+        success: (res) => {
+          if (res.data.code === -1) {
+            reject(res.data);
+          } else {
+            resolve(res.data)
+          }
+        },
+        fail: reject,
+        header: {
+          Authorization: session ? `SessionKey ${session}` : ''
         }
-      },
-      fail: reject,
-      header: {
-      }
-    }, options)
+      }, options)
+      options.url = options.url + options.api;
+      wx.request(options)
+    }
 
-    options.url = options.url + options.api
-    wx.request(options)
+    if (needSession) {
+        getSession()
+        .then(session=>{
+          excuteRequest(session);
+        })
+    } else {
+      excuteRequest();
+    }
   })
 }

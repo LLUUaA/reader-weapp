@@ -41,3 +41,7 @@
     <text>目录</text>
   </view>
 </view>
+
+<view class='last-read ft-xsmall' wx:if="{{showLastRead}}" bindtap='toLastRead'>
+  上一次阅读到第{{lastReadChapterNum}}章,点击切换。{{hideLastReadTimes}}秒后隐藏
+</view>

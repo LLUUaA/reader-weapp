@@ -2,6 +2,7 @@
 //获取应用实例
 
 import { getAddBookShelf,addBookShelf } from '../../utils/book.js';
+
 const app = getApp()
 
 Page({
@@ -14,10 +15,17 @@ Page({
   },
 
   onShow:function(){
-   let bookShelfList = getAddBookShelf();
-   this.setData({
-     bookShelfList
-   })
+    this.getShelf();
+  },
+
+  getShelf() {
+    getAddBookShelf()
+    .then(res=>{
+      this.setData({
+        bookShelfList:res
+      })
+    })
+
   },
 
   longTapBook(event){
