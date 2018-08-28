@@ -1,4 +1,4 @@
-var env, devEnv = false;
+var env, devEnv = true;
 
 env = {
   ver: "v1.0.4",
