@@ -82,7 +82,6 @@ Page({
     let nextPage = this.data.nextPage;
     if (page && !nextPage) return;
     wx.showNavigationBarLoading();
-
     getBookType(page ? nextPage : type)
       .then(res => {
         let hotBook = this.data.hotBook || [],
@@ -183,9 +182,11 @@ Page({
   },
 
   getBook() {
+    wx.showNavigationBarLoading();
     getHotBook()
       .then(res => {
         wx.stopPullDownRefresh();
+        wx.hideNavigationBarLoading();
         this.setData({
           totalBook: null,
           hotBook: res.hotBook,
@@ -196,6 +197,7 @@ Page({
         })
       }, err => {
         wx.stopPullDownRefresh();
+        wx.hideNavigationBarLoading();
       })
   },
 
