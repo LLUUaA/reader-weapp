@@ -47,7 +47,7 @@ function checkBook(bookId, backData = true) {
  */
 export function addBookShelf(book, add = true, cb) {
   const checkBack = checkBook(book.bookId);
-  let data = checkBack.data;
+  let data = checkBack.data, status;
 
   if (add && data.length > MAX_BOOK_SHELF) {
     wx.showToast({
@@ -62,20 +62,20 @@ export function addBookShelf(book, add = true, cb) {
   if (add) {
     //如果是添加
     data.unshift(book);
-    addBookShelfSer({
-      bookId: book.bookId,
-      bookInfo: book,
-      status: 1
-    })
+    status = 1;
   } else {
     //如果是移除
     data.splice(checkBack.index, 1);
-    addBookShelfSer({
+    status = 0;
+  }
+  
+  addBookShelfSer({
+    content: [{
       bookId: book.bookId,
       bookInfo: book,
-      status: 0
-    })
-  }
+      status
+    }]
+  })
 
   wx.setStorage({
     key: BOOK_SHELF_KEY,
@@ -103,26 +103,52 @@ export function getAddBookShelf() {
   return new Promise((resolve, reject) => {
     let bookList = [];
     bookList = wx.getStorageSync(BOOK_SHELF_KEY) || [];
-    if (bookList.length) {
-      //当本地缓存存在时不去后台获取数据
-      resolve(bookList);
-    } else {
-      wx.showNavigationBarLoading();
-      getBookShelfSer().then(res => {
-        wx.hideNavigationBarLoading();
-        res.forEach(item => {
-          bookList.push(JSON.parse(item.book_info));
+    resolve(bookList);
+
+    //获取服务器数据
+    wx.showNavigationBarLoading();
+    getBookShelfSer().then(res => {
+      wx.hideNavigationBarLoading();
+      let isDiff = false,//是否与本地不一致
+        bookListService = [];//服务器的数据
+      if (res.length === bookList.length) {
+        //本地和服务器一样
+        res.forEach((item, index) => {
+          let bookInfo = JSON.parse(item.book_info);
+          bookListService.push(bookInfo);
+          if (!isDiff && bookInfo.bookId != bookList[index].bookId) {
+            isDiff = true;
+          }
+        });
+      } else if (!res.length && bookList.length) {
+        //本地有数据服务器没有
+        let data = [];
+        bookList.forEach(item=>{
+          data.push({
+            bookId: item.bookId,
+            bookInfo: item,
+            status: 1
+          })
         })
-        wx.setStorage({
-          key: BOOK_SHELF_KEY,
-          data: bookList,
+
+        addBookShelfSer({
+          content:data
         })
-        resolve(bookList);
+      }else {
+        isDiff = true;
+      }
+
+
+      if(isDiff) {
+      wx.setStorage({
+        key: BOOK_SHELF_KEY,
+        data: bookListService,
       })
-      .catch(err=>{
+      }
+    })
+      .catch(err => {
         wx.hideNavigationBarLoading();
       })
-    }
   })
 }
 

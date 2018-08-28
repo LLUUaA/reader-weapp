@@ -33,6 +33,7 @@ Page({
     }
   },
 
+  lastSetNav:{},
   handleCate(scrollTop) {
     let cateQuery = this.data.cateQuery;
     if (!cateQuery || !cateQuery.height) return;
@@ -47,14 +48,18 @@ Page({
       color = '#333333';
       fColor = '#ffffff';
     }
+    if ( this.lastSetNav.color !== color) {
+      wx.setNavigationBarColor({
+        frontColor: fColor,
+        backgroundColor: color,
+        animation: {
+          duration: 300
+        }
+      })
+    }
+    this.lastSetNav.color = color;
+    this.lastSetNav.fColor = fColor;
 
-    wx.setNavigationBarColor({
-      frontColor: fColor,
-      backgroundColor: color,
-      animation:{
-        duration: 300
-      }
-    })
     if (this.data.per === 1 && per === 1) return;
     this.setData({
       cateQuery
@@ -76,8 +81,8 @@ Page({
   getBookType(type, page = false) {
     let nextPage = this.data.nextPage;
     if (page && !nextPage) return;
-
     wx.showNavigationBarLoading();
+
     getBookType(page ? nextPage : type)
       .then(res => {
         let hotBook = this.data.hotBook || [],

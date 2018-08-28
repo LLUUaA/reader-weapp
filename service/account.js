@@ -29,6 +29,7 @@ function backSession(session) {
   for (let i in observer) {
     observer[i](session);
   }
+  observer = null;
   observer = [];
 }
 

@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "搜索",
+  "onReachBottomDistance":100,
   "usingComponents": {
     "bookList": "/component/bookList/bookList",
     "backTop": "/component/backTop/backTop"
