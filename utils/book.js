@@ -69,13 +69,13 @@ export function addBookShelf(book, add = true, cb) {
     status = 0;
   }
   
-  addBookShelfSer({
-    content: [{
+  addBookShelfSer(
+     [{
       bookId: book.bookId,
       bookInfo: book,
       status
     }]
-  })
+  )
 
   wx.setStorage({
     key: BOOK_SHELF_KEY,
@@ -131,9 +131,7 @@ export function getAddBookShelf() {
           })
         })
 
-        addBookShelfSer({
-          content:data
-        })
+        addBookShelfSer(data)
       }else {
         isDiff = true;
       }

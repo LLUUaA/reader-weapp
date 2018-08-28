@@ -1,7 +1,7 @@
-var env, devEnv = true;
+var env, devEnv = false;
 
 env = {
-  ver: "v1.0.3",
+  ver: "v1.0.4",
   ENV: devEnv
 }
 
@@ -9,8 +9,8 @@ env = {
  * 开发环境
  */
 const dev = {
-  host: "http://192.168.66.100:3000/"
   // host: "http://192.168.66.100:3000/"
+  host: "http://192.168.1.178:3000/"
 }
 
 /**
