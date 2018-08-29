@@ -103,45 +103,46 @@ export function getAddBookShelf() {
   return new Promise((resolve, reject) => {
     let bookList = [];
     bookList = wx.getStorageSync(BOOK_SHELF_KEY) || [];
-    resolve(bookList);
-
+    if (bookList.length) {
+      resolve(bookList);
+    }
     //获取服务器数据
     wx.showNavigationBarLoading();
     getBookShelfSer().then(res => {
       wx.hideNavigationBarLoading();
       let isDiff = false,//是否与本地不一致
         bookListService = [];//服务器的数据
-      if (res.length === bookList.length) {
-        //本地和服务器一样
-        res.forEach((item, index) => {
-          let bookInfo = JSON.parse(item.book_info);
-          bookListService.push(bookInfo);
-          if (!isDiff && bookInfo.bookId != bookList[index].bookId) {
-            isDiff = true;
-          }
-        });
-      } else if (!res.length && bookList.length) {
+
+      res.forEach((item, index) => {
+        let bookInfo = JSON.parse(item.book_info);
+        bookListService.push(bookInfo);
+        if (!isDiff && bookList[index] && bookInfo.bookId != bookList[index].bookId) {
+          isDiff = true;
+        }
+      });
+
+      if (!bookListService.length && bookList.length) {
         //本地有数据服务器没有
         let data = [];
-        bookList.forEach(item=>{
+        resolve(bookList);
+        bookList.forEach(item => {
           data.push({
             bookId: item.bookId,
             bookInfo: item,
             status: 1
           })
         })
+        addBookShelfSer(data);
 
-        addBookShelfSer(data)
-      }else {
+      } else if (bookListService.length && !bookList.length) {
+        //本地没有数据服务器有
+        resolve(bookListService);
+        wx.setStorage({
+          key: BOOK_SHELF_KEY,
+          data: bookListService,
+        })
+      } else {
         isDiff = true;
-      }
-
-
-      if(isDiff) {
-      wx.setStorage({
-        key: BOOK_SHELF_KEY,
-        data: bookListService,
-      })
       }
     })
       .catch(err => {

@@ -1,5 +1,5 @@
 import request from './request';
-let observer = { } ,loginStatus ,count=0;
+let observer = { } ,loginStatus ,count=0 ,timer;
 
 function wxLogin() {
   return new Promise((resolve,reject)=>{
@@ -26,6 +26,11 @@ function wxLogin() {
 }
 
 function backSession(session) {
+  if(timer) {
+    clearTimeout(timer);
+    timer = null;
+  }
+  timer = setTimeout(wxLogin,1795*1000); //1795秒后重新登陆
   for (let i in observer) {
     observer[i](session);
   }
