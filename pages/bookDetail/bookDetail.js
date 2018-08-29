@@ -38,11 +38,15 @@ Page({
   },
 
   getBookDetail(bookId) {
+    wx.showNavigationBarLoading();
     getBook(bookId)
       .then(res => {
+        wx.hideNavigationBarLoading();
         this.setData({
           bookInfo: res.bookInfo
         })
+      },err=>{
+        wx.hideNavigationBarLoading();
       })
   },
 

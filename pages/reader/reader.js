@@ -148,9 +148,11 @@ Page({
         let chapterNum = this.data.chapterNum;
         switch (getDirection(event.changedTouches[0])) {
           case 'left':
+            // wx.vibrateShort();
             this.getReader(bookId, --chapterNum);
             break;
           case 'right':
+            // wx.vibrateShort();
             this.getReader(bookId, ++chapterNum);
             break;
           default:
