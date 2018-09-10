@@ -66,6 +66,7 @@ Page({
 
     if(!bookShelf) return;
 
+    app.bookInfo = bookShelf;
     wx.navigateTo({
       url: `../reader/reader?bookId=${bookShelf.bookId}&chapterNum=${bookShelf.readChapter}`,
     })

@@ -21,6 +21,9 @@ Page({
     this.checkAddBookShelf(options.bookId);
   },
 
+  onShow:function() {
+    if (this.data.bookInfo) app.bookInfo = this.data.bookInfo;//阅读时显示书名
+  },
 
   toAuthorBook(){
     wx.navigateTo({
@@ -45,6 +48,7 @@ Page({
         this.setData({
           bookInfo: res.bookInfo
         })
+        app.bookInfo = this.data.bookInfo; //阅读时显示书名
       },err=>{
         wx.hideNavigationBarLoading();
       })

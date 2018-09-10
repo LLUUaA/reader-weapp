@@ -9,11 +9,20 @@ export default (options, needSession = true) => {
         data: {},
         method: 'GET',
         success: (res) => {
+          // console.log(options, res);
+          if (res.statusCode === 401) {
+            reject(res.data);
+            const app = getApp();
+            app.globalData.session = null;
+            return;
+          }
+
           if (res.data.code === -1) {
             reject(res.data);
-          } else {
-            resolve(res.data)
+            return;
           }
+
+          resolve(res.data)
         },
         fail: reject,
         header: {
@@ -25,8 +34,8 @@ export default (options, needSession = true) => {
     }
 
     if (needSession) {
-        getSession()
-        .then(session=>{
+      getSession()
+        .then(session => {
           excuteRequest(session);
         })
     } else {

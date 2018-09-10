@@ -1,13 +1,8 @@
 // pages/reader/reader.js
 
-import {
-  readBook,
-  getLastRead
-} from '../../service/book.js';
-import {
-  updateChapter,
-  checkBookShelf
-} from '../../utils/book.js';
+import { readBook,  getLastRead } from '../../service/book.js';
+import { updateChapter, checkBookShelf } from '../../utils/book.js';
+import { Throttle } from '../../utils/lib/index.js';
 const READER_SETTING_KEY = 'readerSettingKey'; //阅读设置key
 const fontSizeInterval = {
   max: 40,
@@ -31,20 +26,23 @@ Page({
     backgroundList: backgroundList,
     readerSetting: null, //阅读设置（字号、行高、背景）
     showSetting: null,
-    hideLastReadTimes: 3, //3秒后隐藏
+    hideLastReadTimes: 5, //3秒后隐藏
     lastReadChapterNum: null,
-    showLastRead:false,
-    readerIndex:0,//阅读章节index
+    showLastRead: false,
+    readerIndex: 0,//阅读章节index
+    readerHeight:null,//阅读区域高度
+    windowHeight:null
   },
 
   isReaderPage: true,
-  onLoad: function(options) {
+  onLoad: function (options) {
     const {
       bookId,
       chapterNum
     } = options;
 
     if (!bookId) return;
+
     this.getReader(bookId, chapterNum)
       .then(res => {
         this.getLastRead(bookId)
@@ -71,6 +69,13 @@ Page({
       this.getReaderSetting();
       delete app.chapterInfo;
     }
+
+    if (app.bookInfo) {
+      wx.setNavigationBarTitle({
+        title: app.bookInfo.bookName || 'reader'
+      })
+      delete app.bookInfo;
+    }
   },
 
   toLastRead() {
@@ -83,7 +88,7 @@ Page({
       clearInterval(this.getLastRead.timer);
       this.getLastRead.timer = null;
       this.setData({
-        showLastRead:null
+        showLastRead: null
       })
     }
   },
@@ -108,7 +113,7 @@ Page({
       }, 1000);
       this.setData({
         lastReadChapterNum: res,
-        showLastRead:true
+        showLastRead: true
       })
     }, err => {
 
@@ -154,10 +159,7 @@ Page({
             break;
           case 'right':
             // wx.vibrateShort();
-            this.setData({
-              readerIndex:0
-            })
-            this.getReader(bookId, ++chapterNum,0);
+            this.getReader(bookId, ++chapterNum, 0);
             break;
           default:
             return;
@@ -190,7 +192,7 @@ Page({
           case 'add':
             if (readerSetting.fontSize >= fontSizeInterval.max) {
               wx.showToast({
-                title: `最大字号为${fontSizeInterval.max/2}哦 (＞﹏＜)`,
+                title: `最大字号为${fontSizeInterval.max / 2}哦 (＞﹏＜)`,
                 icon: 'none'
               })
               return;
@@ -200,7 +202,7 @@ Page({
           case 'reduce':
             if (readerSetting.fontSize <= fontSizeInterval.min) {
               wx.showToast({
-                title: `最小字号为${fontSizeInterval.min/2}哦 (＞﹏＜)`,
+                title: `最小字号为${fontSizeInterval.min / 2}哦 (＞﹏＜)`,
                 icon: 'none'
               })
               return;
@@ -272,8 +274,6 @@ Page({
     })
   },
 
-
-
   /**
    * @function getReader 获取内容
    * @desc 获取到之后获取下一章
@@ -282,27 +282,39 @@ Page({
    */
   getReader(bookId, chapterNum = 1, readerIndex) {
     return new Promise((resolve, reject) => {
+      if (this.getReader._lock) return;
+      this.getReader._lock = true;
       wx.showNavigationBarLoading();
       readBook(bookId, chapterNum)
         .then(res => {
           wx.hideNavigationBarLoading();
+          this.getReader._lock = false;
           resolve();
           if (!res || !res.chapterContent.length) return;
-          wx.setNavigationBarTitle({
-            title: res.chapterName || 'reader'
-          })
 
-          let readerIndex = readerIndex >= 0 ? readerIndex : this.data.readerIndex;
+          readerIndex = readerIndex >= 0 ? readerIndex : this.data.readerIndex;
           let key = `chapterContent[${readerIndex}]`;
 
           readerIndex++;
           res.key = Math.round(new Date().getTime() / 1000);
+
+          if (readerIndex === 1) {
+            this.setData({
+              chapterContent: [res]
+            })
+          } else {
+            this.handleScroll._lock = false;//解锁(当触底加载时)
+            this.setData({
+              [key]: res
+            })
+          }
+
           this.setData({
             chapterNum,
             readerIndex,
-            [key]: res
           }, () => {
             updateChapter(bookId, chapterNum);
+            this.readerSelectQuery();
             //左右滑动或者第一章
             if (readerIndex === 1) {
               wx.pageScrollTo({
@@ -310,10 +322,11 @@ Page({
                 duration: 0
               })
             }
-
           })
         }, err => {
           reject();
+          this.handleScroll._lock = false;//失败解锁
+          this.getReader._lock = false;
           wx.hideNavigationBarLoading();
           wx.showToast({
             title: '获取失败，请重试。',
@@ -324,22 +337,15 @@ Page({
   },
 
   /**
-   * @function switchChapter 切换章节
-   * @param {Number} next 默认下一页
-   */
-  switchChapter(event) {
+ * @function switchChapter 切换章节
+ * @param {Number} next 默认下一页
+ */
+  switchChapter(event, nextPage) {
     const bookId = this.data.bookId;
-    const next = event.target.dataset.switchType;
+    const next = nextPage ? true : event.target.dataset.switchType === 2;
     let chapterNum = this.data.chapterNum;
-    chapterNum = next === 2 ? ++chapterNum : --chapterNum;
-    this.getReader(bookId, chapterNum);
-  },
-
-  getNextChapter() {
-    const bookId = this.data.bookId;
-    let chapterNum = this.data.chapterNum;
-    ++chapterNum;
-    this.getReader(bookId, chapterNum);
+    chapterNum = next ? ++chapterNum : --chapterNum;
+    this.getReader(bookId, chapterNum, nextPage ? -1 : 0);
   },
 
   toChapterDetails() {
@@ -350,21 +356,72 @@ Page({
     this.closeSetting();
   },
 
+  /**
+   * @function readerSelectQuery 切换章节
+   * @desc 查询reader 分页加载用
+   */
+  readerSelectQuery() {
+    const query = wx.createSelectorQuery();
+    query.select("#reader").boundingClientRect((rect) => {
+      /**
+       * 公式：windowHeight/ (readerHeigth - scrollTop) 
+       *  readerHeigth - scrollTop为触底时的距离 ，整个结果为触底是的比例高度，这里取1.4
+       * 
+       * iphone 5 1.48
+       * iphone 6 1.47
+       * iphone 6s 1.49
+       * 
+       */
+      this.setData({
+        readerHeight: parseInt(rect.height / 1.4),
+        windowHeight: this.getSysInfo().windowHeight || 672
+      })
+    }).exec();
+  },
+
+
+  /**
+   * @function getSysInfo
+   * @desc 获取手机信息
+   * @returns object
+   */
+  systemInfo: null,
+  getSysInfo() {
+    if (this.systemInfo) return this.systemInfo;
+    this.systemInfo = wx.getSystemInfoSync();
+    return this.systemInfo;
+  },
+
   defaultSetting: {
     fontSize: 28,
     bgColor: '#EAEAEF',
     lineHeight: 2
   },
 
-  onUnload:function() {
+  onUnload: function () {
     this.clear();
   },
 
-  onReachBottom: function () {
-    this.getNextChapter();
+  handleScroll(scrollTop){
+    if (this.handleScroll._lock) return;
+    const readerHeight = this.data.readerHeight;
+    const windowHeight = this.data.windowHeight;
+    
+    if (windowHeight > readerHeight - scrollTop ) {
+      this.handleScroll._lock = true;
+      this.switchChapter(1,true); //下一章
+    }
   },
 
-  onShareAppMessage: function() {
+  onPageScroll(event) {
+    Throttle(this.handleScroll.bind(this, event.scrollTop));
+  },
+
+  onReachBottom: function () {
+    // this.switchChapter(1,true); //下一章
+  },
+
+  onShareAppMessage: function () {
     return app.getShareMsg({
       title: this.data.chapterName || 'Reader',
       path: `pages/reader/reader?bookId=${this.data.bookId}&chapterNum=${this.data.chapterNum}`,
