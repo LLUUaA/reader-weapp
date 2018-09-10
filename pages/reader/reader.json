@@ -1,4 +1,7 @@
 {
   "navigationBarTitleText": "reader",
-  "navigationBarBackgroundColor": "#e1e1e1"
+  "navigationBarBackgroundColor": "#e1e1e1",
+      "usingComponents": {
+        "InfinitePage": "/component/InfinitePage/InfinitePage"
+      }
 }

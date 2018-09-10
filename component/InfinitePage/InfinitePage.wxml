@@ -1,0 +1,6 @@
+<!--component/InfinitePage/InfinitePage.wxml-->
+
+<view class='book-name'>{{chapterName || ''}}</view>
+<view class="reader ft-small color-black">
+  <view class="txt" wx:for="{{chapterContent}}" wx:key="{{index}}" wx:for-item="item">{{item}}</view>
+</view>

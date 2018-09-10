@@ -5,17 +5,15 @@
 }
 
 .book-name{
-  text-align: center;
+  text-align: start;
   margin-bottom: 20rpx;
+  font-weight: bold;
+  border-bottom: 1px solid #666666;
 }
 
-#reader {
+.reader {
     word-wrap: break-word;
     text-indent: 2em;
-}
-
-#reader .txt{
-
 }
 
 .switch-btn{
@@ -24,17 +22,20 @@
         -ms-flex-pack: justify;
             justify-content: space-between;
     margin: 15rpx;
+    flex-wrap: wrap;
 }
 
 .switch-btn .btn{
-    width: 46%;
-    height: 60rpx;
-    line-height: 60rpx;
+    width: 100%;
+    height: 75rpx;
+    line-height: 75rpx;
     border: 1rpx solid #cecece;
+    margin-bottom: 20rpx;
     text-align: center;
+    border-radius: 30rpx;
 }
 
-#operate {
+ .operate {
   width: 400rpx;
   height: 350rpx;
   line-height: 350rpx;
@@ -51,7 +52,7 @@
 .setting{
   position: fixed;
   width: 100%;
-  height: 240rpx;
+  height: 350rpx;
   left: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, .85);
@@ -65,7 +66,7 @@
 }
 
 .setting.close{
-  transform: translateY(240rpx);
+  transform: translateY(350rpx);
 }
 
 .setting .font-size{
@@ -132,8 +133,12 @@
   background-color: #eeeeee;
 }
 
+.setting .background {
+  margin: 20rpx 0;
+}
+
 .setting .font-size{
-  margin: 15rpx 0;
+  margin: 25rpx 0;
 }
 
 .last-read {
@@ -148,3 +153,18 @@
   padding-right: 30rpx;
   text-align: right;
 }
+
+.setting .switch {
+  flex-wrap: nowrap;
+}
+.setting .switch .btn{
+  width:46%;
+  height:60rpx;
+  line-height:60rpx;
+}
+
+.infinite-page {
+  display: block;
+  margin-bottom: 150rpx;
+}
+

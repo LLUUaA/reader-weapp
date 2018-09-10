@@ -33,7 +33,8 @@ Page({
     showSetting: null,
     hideLastReadTimes: 3, //3秒后隐藏
     lastReadChapterNum: null,
-    showLastRead:false
+    showLastRead:false,
+    readerIndex:0,//阅读章节index
   },
 
   isReaderPage: true,
@@ -149,11 +150,14 @@ Page({
         switch (getDirection(event.changedTouches[0])) {
           case 'left':
             // wx.vibrateShort();
-            this.getReader(bookId, --chapterNum);
+            this.getReader(bookId, --chapterNum, 0);
             break;
           case 'right':
             // wx.vibrateShort();
-            this.getReader(bookId, ++chapterNum);
+            this.setData({
+              readerIndex:0
+            })
+            this.getReader(bookId, ++chapterNum,0);
             break;
           default:
             return;
@@ -272,10 +276,11 @@ Page({
 
   /**
    * @function getReader 获取内容
+   * @desc 获取到之后获取下一章
    * @param {Number} bookId 
    * @param {Number} chapterNum
    */
-  getReader(bookId, chapterNum = 1) {
+  getReader(bookId, chapterNum = 1, readerIndex) {
     return new Promise((resolve, reject) => {
       wx.showNavigationBarLoading();
       readBook(bookId, chapterNum)
@@ -286,16 +291,26 @@ Page({
           wx.setNavigationBarTitle({
             title: res.chapterName || 'reader'
           })
+
+          let readerIndex = readerIndex >= 0 ? readerIndex : this.data.readerIndex;
+          let key = `chapterContent[${readerIndex}]`;
+
+          readerIndex++;
+          res.key = Math.round(new Date().getTime() / 1000);
           this.setData({
             chapterNum,
-            chapterName: res.chapterName,
-            chapterContent: res.chapterContent || []
+            readerIndex,
+            [key]: res
           }, () => {
             updateChapter(bookId, chapterNum);
-            wx.pageScrollTo({
-              scrollTop: 0,
-              duration: 0
-            })
+            //左右滑动或者第一章
+            if (readerIndex === 1) {
+              wx.pageScrollTo({
+                scrollTop: 0,
+                duration: 0
+              })
+            }
+
           })
         }, err => {
           reject();
@@ -320,6 +335,13 @@ Page({
     this.getReader(bookId, chapterNum);
   },
 
+  getNextChapter() {
+    const bookId = this.data.bookId;
+    let chapterNum = this.data.chapterNum;
+    ++chapterNum;
+    this.getReader(bookId, chapterNum);
+  },
+
   toChapterDetails() {
     wx.navigateTo({
       url: `../chapterDetails/chapterDetails?bookId=${this.data.bookId}`
@@ -336,6 +358,10 @@ Page({
 
   onUnload:function() {
     this.clear();
+  },
+
+  onReachBottom: function () {
+    this.getNextChapter();
   },
 
   onShareAppMessage: function() {

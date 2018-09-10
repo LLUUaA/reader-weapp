@@ -1,14 +1,13 @@
 <view class="reader-content" style="background-color:{{readerSetting.bgColor}};" catchtap='closeSetting' bindtouchstart='moveEvent' bindtouchmove='closeSetting' bindtouchend='moveEvent' bindtouchcancel='moveEvent'>
-  <view class='book-name'>{{chapterName || ''}}</view>
   <view id='reader' class="ft-small color-black" style="line-height:{{readerSetting.lineHeight}};font-size:{{readerSetting.fontSize}}rpx;">
-    <view class="txt" wx:for="{{chapterContent}}" wx:key="{{index}}" wx:for-item="item">{{item}}</view>
+    <InfinitePage class="infinite-page" wx:for="{{chapterContent}}" wx:key="{{item.key}}" chapterName="{{item.chapterName}}" chapterContent="{{item.chapterContent}}" />
   </view>
-  <view class="switch-btn flex ft-small color-black">
+  <view class="switch-btn flex ft-small color-black" wx:if="{{chapterContent}}">
     <view class="pre btn" data-switch-type="{{1}}" bindtap="switchChapter">上一章</view>
     <view class="next btn" data-switch-type="{{2}}" bindtap="switchChapter">下一章</view>
   </view>
 
-  <view id='operate' catch:tap='handleShowSetting'>operate area</view>
+  <view id='operate' class='operate' catch:tap='handleShowSetting'>operate area</view>
 </view>
 
 <view class="setting {{showSetting?'open':'close'}} ft-middle color-grey" catch:tap='changeSetting'>
@@ -36,6 +35,12 @@
     <text class='color-grey title'>背景</text>
     <view data-cate='bg' data-index="{{index}}" wx:for="{{backgroundList}}" wx:key="{{item}}" style="background-color:{{item}}" class="bg-dot"></view>
   </view>
+
+  <view class='switch switch-btn flex'>
+    <view class="btn" data-switch-type="{{1}}" bindtap="switchChapter">上一章</view>
+    <view class="btn" data-switch-type="{{2}}" bindtap="switchChapter">下一章</view>
+  </view>
+
   <view catchtap='toChapterDetails' class='chapter flex color-grey'>
     <image src='/assets/ico_chapter.svg'></image>
     <text>目录</text>
