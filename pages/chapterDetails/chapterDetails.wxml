@@ -1,5 +1,4 @@
 <view class="details-content">
   <chapterList bookId="{{bookId}}" moreChapter="{{!0}}" />
-
   <backTop pageScroll="{{pageScroll}}" />
 </view>

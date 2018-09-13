@@ -65,7 +65,7 @@ Page({
       this.setData({
         bookId
       })
-      this.getReader(bookId, chapterNum);
+      this.getReader(bookId, chapterNum,0);
       this.getReaderSetting();
       delete app.chapterInfo;
     }
@@ -79,7 +79,7 @@ Page({
   },
 
   toLastRead() {
-    this.getReader(this.data.bookId, this.data.lastReadChapterNum);
+    this.getReader(this.data.bookId, this.data.lastReadChapterNum,0);
     this.clear();
   },
 
