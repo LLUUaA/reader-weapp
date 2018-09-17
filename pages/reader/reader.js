@@ -393,8 +393,8 @@ Page({
   },
 
   defaultSetting: {
-    fontSize: 28,
-    bgColor: '#EAEAEF',
+    fontSize: 32,
+    bgColor: '#FDE6E0',
     lineHeight: 2
   },
 
