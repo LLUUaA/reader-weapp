@@ -1,7 +1,22 @@
-<view class="reader-content" style="background-color:{{readerSetting.bgColor}};" catchtap='closeSetting' bindtouchstart='moveEvent' bindtouchmove='closeSetting' bindtouchend='moveEvent' bindtouchcancel='moveEvent'>
-  <view id='reader' class="ft-small color-black" style="line-height:{{readerSetting.lineHeight}};font-size:{{readerSetting.fontSize}}rpx;">
+<view id='reader' class="reader-content" style="background-color:{{readerSetting.bgColor}};" catchtap='closeSetting' bindtouchstart='moveEvent' bindtouchmove='closeSetting' bindtouchend='moveEvent' bindtouchcancel='moveEvent'>
+  <view class="ft-small color-black" style="line-height:{{readerSetting.lineHeight}};font-size:{{readerSetting.fontSize}}rpx;">
     <InfinitePage class="infinite-page" wx:for="{{chapterContent}}" wx:key="{{item.key}}" chapterName="{{item.chapterName}}" chapterContent="{{item.chapterContent}}" />
   </view>
+
+  <!-- loading -->
+  <view class="load letter-holder" hidden="{{hideLoading}}">
+    <view class="l-1 letter">L</view>
+    <view class="l-2 letter">o</view>
+    <view class="l-3 letter">a</view>
+    <view class="l-4 letter">d</view>
+    <view class="l-5 letter">i</view>
+    <view class="l-6 letter">n</view>
+    <view class="l-7 letter">g</view>
+    <view class="l-8 letter">.</view>
+    <view class="l-9 letter">.</view>
+    <view class="l-10 letter">.</view>
+  </view>
+
   <view class="switch-btn flex ft-small color-black" wx:if="{{chapterContent}}">
     <view class="pre btn" data-switch-type="{{1}}" bindtap="switchChapter">上一章</view>
     <view class="next btn" data-switch-type="{{2}}" bindtap="switchChapter">下一章</view>

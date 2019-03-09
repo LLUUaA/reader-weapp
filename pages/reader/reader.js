@@ -26,12 +26,13 @@ Page({
     backgroundList: backgroundList,
     readerSetting: null, //阅读设置（字号、行高、背景）
     showSetting: null,
-    hideLastReadTimes: 5, //3秒后隐藏
+    hideLastReadTimes: 10, //10秒后隐藏
     lastReadChapterNum: null,
     showLastRead: false,
     readerIndex: 0,//阅读章节index
     readerHeight:null,//阅读区域高度
-    windowHeight:null
+    windowHeight:null,
+    hideLoading:null,//是否隐藏loading
   },
 
   isReaderPage: true,
@@ -285,9 +286,15 @@ Page({
       if (this.getReader._lock) return;
       this.getReader._lock = true;
       wx.showNavigationBarLoading();
+      this.setData({
+        hideLoading:false
+      })
       readBook(bookId, chapterNum)
         .then(res => {
           wx.hideNavigationBarLoading();
+          this.setData({
+            hideLoading: true
+          })
           this.getReader._lock = false;
           resolve();
           if (!res || !res.chapterContent.length) return;
@@ -303,7 +310,6 @@ Page({
               chapterContent: [res]
             })
           } else {
-            this.handleScroll._lock = false;//解锁(当触底加载时)
             this.setData({
               [key]: res
             })
@@ -328,6 +334,9 @@ Page({
           this.handleScroll._lock = false;//失败解锁
           this.getReader._lock = false;
           wx.hideNavigationBarLoading();
+          this.setData({
+            hideLoading: true
+          })
           wx.showToast({
             title: '获取失败，请重试。',
             icon: 'none'
@@ -363,17 +372,9 @@ Page({
   readerSelectQuery() {
     const query = wx.createSelectorQuery();
     query.select("#reader").boundingClientRect((rect) => {
-      /**
-       * 公式：windowHeight/ (readerHeigth - scrollTop) 
-       *  readerHeigth - scrollTop为触底时的距离 ，整个结果为触底是的比例高度，这里取1.4
-       * 
-       * iphone 5 1.48
-       * iphone 6 1.47
-       * iphone 6s 1.49
-       * 
-       */
+      this.handleScroll._lock = false; //查询到内容高度时解锁
       this.setData({
-        readerHeight: parseInt(rect.height / 1.4),
+        readerHeight: rect.height,
         windowHeight: this.getSysInfo().windowHeight || 672
       })
     }).exec();
@@ -407,7 +408,8 @@ Page({
     const readerHeight = this.data.readerHeight;
     const windowHeight = this.data.windowHeight;
     
-    if (windowHeight > readerHeight - scrollTop ) {
+    // 当只有两个page阅读时获取下一章
+    if (readerHeight - scrollTop < 3 * windowHeight) {
       this.handleScroll._lock = true;
       this.switchChapter(1,true); //下一章
     }

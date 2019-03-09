@@ -1,80 +1,80 @@
-.reader-content{
-    background-color: #e1e1e1;
-    min-height: 100vh;
-    padding: 20rpx; 
+.reader-content {
+  background-color: #e1e1e1;
+  min-height: 100vh;
+  padding: 20rpx;
 }
 
-.book-name{
+.book-name {
   text-align: start;
   margin-bottom: 20rpx;
   font-weight: bold;
-  border-bottom: 1px solid #666666;
+  border-bottom: 1px solid #666;
 }
 
 .reader {
-    word-wrap: break-word;
-    text-indent: 2em;
+  word-wrap: break-word;
+  text-indent: 2em;
 }
 
-.switch-btn{
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    margin: 15rpx;
-    flex-wrap: wrap;
+.switch-btn {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin: 15rpx;
+  flex-wrap: wrap;
 }
 
-.switch-btn .btn{
-    width: 100%;
-    height: 75rpx;
-    line-height: 75rpx;
-    border: 1rpx solid #cecece;
-    margin-bottom: 20rpx;
-    text-align: center;
-    border-radius: 30rpx;
+.switch-btn .btn {
+  width: 100%;
+  height: 75rpx;
+  line-height: 75rpx;
+  border: 1rpx solid #cecece;
+  margin-bottom: 20rpx;
+  text-align: center;
+  border-radius: 30rpx;
 }
 
- .operate {
+.operate {
   width: 400rpx;
   height: 350rpx;
   line-height: 350rpx;
   text-align: center;
-  border:  1px solid red;
+  border: 1px solid red;
   position: fixed;
   font-size: 32rpx;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   opacity: 0;
 }
 
-.setting{
+.setting {
   position: fixed;
   width: 100%;
   height: 350rpx;
   left: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, .85);
-  transition: all .2s ease-out;
+  background-color: rgba(0, 0, 0, 0.80);
+  transition: all 0.2s ease-out;
   padding: 20rpx;
-
 }
 
-.setting.open{
+.setting.open {
   transform: translateY(0);
+  border-radius: 20rpx 20rpx 0 0;
 }
 
-.setting.close{
+.setting.close {
   transform: translateY(350rpx);
 }
 
-.setting .font-size{
+.setting .font-size {
   justify-content: flex-start;
   align-items: center;
 }
 
-.setting .background .bg-dot{
+.setting .background .bg-dot {
   display: inline-block;
   margin-left: 20rpx;
   width: 55rpx;
@@ -83,31 +83,31 @@
   border-radius: 50%;
 }
 
-.setting .background .bg-dot.current{
+.setting .background .bg-dot.current {
   border: 1px solid dodgerblue;
 }
 
-.setting .font-size .title{
+.setting .font-size .title {
   display: inline-block;
   vertical-align: top;
   font-weight: normal;
 }
 
-.setting .font-size .title image{
+.setting .font-size .title image {
   width: 32rpx;
   height: 32rpx;
   vertical-align: middle;
   margin-left: 10rpx;
 }
 
-.setting .font-size .size{
+.setting .font-size .size {
   display: inline-block;
   width: 38rpx;
   text-align: center;
   vertical-align: top;
 }
 
-.setting .chapter{
+.setting .chapter {
   font-size: 34rpx;
   position: absolute;
   top: 30rpx;
@@ -115,13 +115,13 @@
   align-items: center;
 }
 
-.setting .chapter image{
+.setting .chapter image {
   width: 36rpx;
   height: 36rpx;
   margin-right: 10rpx;
 }
 
-.setting .font-size .btn{
+.setting .font-size .btn {
   display: inline-block;
   width: 130rpx;
   height: 55rpx;
@@ -130,14 +130,14 @@
   font-size: 40rpx;
   margin: 0 20rpx;
   text-align: center;
-  background-color: #eeeeee;
+  background-color: #eee;
 }
 
 .setting .background {
   margin: 20rpx 0;
 }
 
-.setting .font-size{
+.setting .font-size {
   margin: 25rpx 0;
 }
 
@@ -146,8 +146,8 @@
   width: 100%;
   height: 60rpx;
   line-height: 60rpx;
-  color: #ffffff;
-  background-color: rgba(0, 0, 0, .6);
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.6);
   top: 0;
   left: 0;
   padding-right: 30rpx;
@@ -157,10 +157,11 @@
 .setting .switch {
   flex-wrap: nowrap;
 }
-.setting .switch .btn{
-  width:46%;
-  height:60rpx;
-  line-height:60rpx;
+
+.setting .switch .btn {
+  width: 46%;
+  height: 60rpx;
+  line-height: 60rpx;
 }
 
 .infinite-page {
@@ -168,3 +169,75 @@
   margin-bottom: 150rpx;
 }
 
+/* loading */
+
+.load .letter {
+  animation-name: loadingF;
+  animation-duration: 1.6s;
+  animation-iteration-count: infinite;
+  animation-direction: linear;
+}
+
+.letter-holder {
+  background: inherit;
+  text-align:center;
+  margin-bottom: 40rpx;
+}
+
+.letter {
+  display: inline-table;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.l-1 {
+  animation-delay: 0.48s;
+}
+
+.l-2 {
+  animation-delay: 0.6s;
+}
+
+.l-3 {
+  animation-delay: 0.72s;
+}
+
+.l-4 {
+  animation-delay: 0.84s;
+}
+
+.l-5 {
+  animation-delay: 0.96s;
+}
+
+.l-6 {
+  animation-delay: 1.08s;
+}
+
+.l-7 {
+  animation-delay: 1.2s;
+}
+
+.l-8 {
+  animation-delay: 1.32s;
+}
+
+.l-9 {
+  animation-delay: 1.44s;
+}
+
+.l-10 {
+  animation-delay: 1.56s;
+}
+
+@keyframes loadingF {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+/* loading end */
